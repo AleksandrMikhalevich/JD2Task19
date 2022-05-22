@@ -10,4 +10,7 @@ public class ConstantsForTest {
     public static final String TEACHER_SURNAME = "Petrov";
     public static final String STUDENT_NAME = "Anatoly";
     public static final String STUDENT_SURNAME = "Kotov";
+    public static final String STUDENT_UPDATE_SURNAME = "Mishkin";
+    public static final int COURSE_ID = 1;
+
 }

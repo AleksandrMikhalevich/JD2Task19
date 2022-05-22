@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Cтудент</title>
+    <title>Профиль студента</title>
     <link href="css/button-small.css" rel="stylesheet">
     <link href="css/button.css" rel="stylesheet">
 
@@ -61,7 +61,7 @@
         <button class="gradient-button1">Сохранить</button>
     </form>
     <% } else if (Objects.equals(request.getParameter("action"), "update")) {%>
-    <h2>Редактирование данных студента</h2>
+    <h2>Редактирование профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%></h2>
     <form name="toUpdate" method="post" action="student" autocomplete="off">
         <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
         Имя: <label>
@@ -75,7 +75,7 @@
     </form>
     <% }
         if (Objects.equals(request.getParameter("action"), "delete")) {%>
-    <h2>Удаление студента</h2>
+    <h2>Удаление профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%></h2>
     <form name="toDelete" method="post" action="student" autocomplete="off">
         <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
         Имя: <label>

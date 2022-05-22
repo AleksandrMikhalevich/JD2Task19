@@ -1,5 +1,6 @@
 package managment.implementation;
 
+import DTO.StudentDTO;
 import DTO.TaskDTO;
 import courses.dao.EntityDaoImplTask;
 import courses.entity.Course;
@@ -53,12 +54,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void assignToStudent(Task task, Student student){
+    public void assignToStudent(Task task, StudentDTO studentDTO){
+        Student student = Student.builder()
+                .id(studentDTO.getId())
+                .name(studentDTO.getName())
+                .surname(studentDTO.getSurname())
+                .build();
         task.setStudent(student);
         taskDao.update(task);
     }
 
-    public void cancelAssignmentToStudent(Task task, Student student){
+    public void cancelAssignmentToStudent(Task task, StudentDTO studentDTO){
+        Student student = Student.builder()
+                .id(studentDTO.getId())
+                .name(studentDTO.getName())
+                .surname(studentDTO.getSurname())
+                .build();
         task.setStudent(null);
         taskDao.update(task);
     }
