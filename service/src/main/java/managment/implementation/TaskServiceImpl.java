@@ -1,7 +1,7 @@
 package managment.implementation;
 
 import DTO.StudentDTO;
-import DTO.TaskDTO;
+import DTO.TaskStudentDTO;
 import courses.dao.EntityDaoImplTask;
 import courses.entity.Course;
 import courses.entity.Student;
@@ -74,19 +74,4 @@ public class TaskServiceImpl implements TaskService {
         taskDao.update(task);
     }
 
-    @Override
-    public List<TaskDTO> listOfAllTasks() {
-        List<Object[]> lists = taskDao.listOfAllTask();
-        List<TaskDTO> listOfTask = new ArrayList<>();
-        for (Object[] list : lists) {
-            listOfTask.add(TaskDTO.builder()
-                    .id((Integer) list[0])
-                    .description((String) list[1])
-                    .review((String) list[2])
-                    .course((String) list[3])
-                    .build());
-        }
-        return listOfTask;
-
-    }
 }

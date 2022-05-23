@@ -1,5 +1,8 @@
-<%@ page import="DTO.TaskDTO" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="DTO.TaskStudentDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="DTO.CourseTaskDTO" %>
+<%@ page import="courses.entity.Task" %>
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: akyna
   Date: 19.05.2022
@@ -46,46 +49,73 @@
     }
 </style>
 <body>
+
 <center>
+    <a class="gradient-button1" href="index.jsp">Главная Страница</a>
     <table border="3" width="50%">
         <caption><b>Список заданий</b></caption>
-        <th>Описание</th>
-        <th>Ревью</th>
-        <th>Курс</th>
-        <th>Действия</th>
-        <%
-            List<TaskDTO> taskList = (List<TaskDTO>) request.getAttribute("tasks");
-            for (TaskDTO task : taskList
-            ) { %>
         <tr>
-            <td><%=task.getDescription()%>
-            </td>
-            <td><%=task.getReview()%>
-            </td>
-            <td><%=task.getCourse()%>
+            <th>№</th>
+            <th>Курс</th>
+            <th>Описание</th>
+            <th>Действия</th>
+        </tr>
+        <%
+            List<CourseTaskDTO> courseAndTasks = (List<CourseTaskDTO>) request.getAttribute("listOfCourseAndTasks");
+            int i = 1;
+            for (CourseTaskDTO tasks : courseAndTasks) { %>
+        <tr>
+            <td>
+                <%= i++%>
             </td>
             <td>
-                <form name="assignToCourse" method="post" action="task">
-                    <input name="id" type="hidden" value="<%=task.getId()%>">
-                    <input name="action" type="hidden" value="assignToCourse">
-                    <button class="gradient-button">Добавление/удаление задания на курс</button>
-                </form>
-                <form name="assignToStudent" method="post" action="task">
-                    <input name="id" type="hidden" value="<%=task.getId()%>">
-                    <input name="action" type="hidden" value="assignToStudent">
-                    <button class="gradient-button">Добавление/удаление задания студенту</button>
+                <%= tasks.getDescription()%>
+            </td>
+            <td>
+                <table>
+                    <% Set<Task> listOfTask = tasks.getListOfTask();
+                        for (Task task : listOfTask) {
+                    %>
+                    <tr>
+                        <td>
+                            <%= task.getDescription()%>
+                        </td>
+                        <td>
+                            <form name="edit" method="post" action="task-form.jsp">
+                                <input name="idTask" type="hidden" value="<%=task.getId()%>">
+                                <button class="gradient-button"><a
+                                        href="task-form.jsp?idTask=<%=task.getId()%>&descriptionCourse=<%=tasks.getDescription()%>&description=<%=task.getDescription()%>&action=update"
+                                >Редактировать</a></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form name="delete" method="post" action="task-form.jsp">
+                                <input name="idTask" type="hidden" value="<%=task.getId()%>">
+                                <button class="gradient-button"><a
+                                        href="task-form.jsp?idTask=<%=task.getId()%>&descriptionCourse=<%=tasks.getDescription()%>&description=<%=task.getDescription()%>&action=delete"
+                                >Удалить</a></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </table>
+            </td>
+            <td>
+                <form name="enroll" method="post" action="task-form.jsp">
+                    <input name="idCourse" type="hidden" value="<%=tasks.getId()%>">
+                    <button class="gradient-button"><a
+                            href="task-form.jsp?idCourse=<%=tasks.getId()%>&description=<%=tasks.getDescription()%>&action=add"
+                    >Добавить</a></button>
                 </form>
             </td>
         </tr>
         <%
             }
         %>
-
     </table>
-
-    <a class="gradient-button1" href="index.jsp">Main Page</a>
-
-    <a class="gradient-button1" href="teacher">Назад</a>
+</center>
 
 </center>
 

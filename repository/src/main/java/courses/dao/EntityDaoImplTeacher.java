@@ -28,16 +28,4 @@ public class EntityDaoImplTeacher extends EntityDaoImpl<Teacher> {
             em.close();
         }
     }
-    public List<Object[]> findCoursesForTeacher(String teacherSurname) {
-        em = HibernateUtil.getEntityManager();
-        Query query = em.createQuery(
-                "SELECT c.id, c.description, c.hours, t.surname, t.name " +
-                        "FROM courses.entity.Course c " +
-                        "LEFT JOIN c.teachers t " +
-                        "WHERE t.surname =:teacherSurname");
-        query.setParameter("teacherSurname", teacherSurname);
-        List<Object[]> list = query.getResultList();
-        em.close();
-        return list;
-    }
 }

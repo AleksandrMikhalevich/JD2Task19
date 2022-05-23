@@ -1,9 +1,8 @@
 package managment.interfaces;
 
 import DTO.StudentDTO;
-import DTO.TaskDTO;
+import DTO.TaskStudentDTO;
 import courses.entity.Course;
-import courses.entity.Student;
 import courses.entity.Task;
 
 import java.util.List;
@@ -26,5 +25,4 @@ public interface TaskService {
 
     void cancelAssignmentToStudent(Task task, StudentDTO student);
 
-    List<TaskDTO> listOfAllTasks();
 }

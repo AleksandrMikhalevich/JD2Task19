@@ -32,16 +32,4 @@ public class EntityDaoImplTask extends EntityDaoImpl<Task> {
         list.forEach(System.out::println);
         em.close();
     }
-
-    public List<Object[]> listOfAllTask() {
-        em = HibernateUtil.getEntityManager();
-        Query query = em.createQuery(
-                "SELECT t.id, t.description, t.review, " +
-                        "c.description " +
-                        "FROM courses.entity.Task t " +
-                        "left join t.course c");
-        List<Object[]> list = query.getResultList();
-        em.close();
-        return list;
-    }
 }

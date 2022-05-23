@@ -1,6 +1,8 @@
 package managment.implementation;
 
 import DTO.StudentDTO;
+import courses.dao.EntityDaoImplAdmin;
+import courses.dao.EntityDaoImplCourse;
 import courses.dao.EntityDaoImplStudent;
 import courses.entity.Course;
 import courses.entity.Student;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private final EntityDaoImplStudent studentDao = new EntityDaoImplStudent();
+    private final EntityDaoImplCourse courseDao = new EntityDaoImplCourse();
 
     @Override
     public StudentDTO registerStudent(String name, String surname) {
@@ -67,24 +70,32 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void enrollStudentInCourse(StudentDTO studentDTO, Course course) {
+    public void enrollStudentInCourse(StudentDTO studentDTO, Integer idCourse) {
+        Course course = courseDao.getEntity(idCourse);
+        Set<Course> listOfCourse = studentDTO.getCourses();
+        listOfCourse.add(course);
+        Set<Task> listOfTask = course.getTasks();
+        listOfTask.addAll(studentDTO.getTasks());
         Student student = Student.builder()
                 .id(studentDTO.getId())
                 .name(studentDTO.getName())
                 .surname(studentDTO.getSurname())
+                .courses(listOfCourse)
+                .tasks(listOfTask)
                 .build();
-        student.getCourses().add(course);
         studentDao.update(student);
     }
 
     @Override
-    public void cancelStudentEnrollment(StudentDTO studentDTO, Course course) {
-        Student student = Student.builder()
-                .id(studentDTO.getId())
-                .name(studentDTO.getName())
-                .surname(studentDTO.getSurname())
-                .build();
-        student.getCourses().remove(course);
+    public void cancelStudentEnrollment(Integer idStudent, Integer idCourse) {
+        Student student = studentDao.getEntity(idStudent);
+        Course course = courseDao.getEntity(idCourse);
+        Set<Course> listOfCourse = student.getCourses();
+        listOfCourse.remove(course);
+        Set<Task> listOfTask = course.getTasks();
+        listOfTask.removeAll(student.getTasks());
+        student.setTasks(listOfTask);
+        student.setCourses(listOfCourse);
         studentDao.update(student);
     }
 }
