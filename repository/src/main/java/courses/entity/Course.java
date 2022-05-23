@@ -33,7 +33,7 @@ public class Course implements Serializable {
     /**
      * Connection with table "Student"
      */
-    @ManyToMany(mappedBy = "courses",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "courses")
     @ToString.Exclude
     @Builder.Default
     private Set<Student> students = new HashSet<>();
@@ -51,6 +51,7 @@ public class Course implements Serializable {
      */
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     @ToString.Exclude
+    @Builder.Default
     private Set<Task> tasks = new HashSet<>();
 
     @Override

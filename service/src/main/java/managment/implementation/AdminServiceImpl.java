@@ -24,9 +24,6 @@ public class AdminServiceImpl implements AdminService {
     private final EntityDaoImplTeacher daoImplTeacher
             = new EntityDaoImplTeacher();
 
-    private final EntityDaoImplMark daoImplMark
-            = new EntityDaoImplMark();
-
     public AdminServiceImpl(EntityDaoImplAdmin daoImplAdmin) {
         this.daoImplAdmin = daoImplAdmin;
     }

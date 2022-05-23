@@ -63,7 +63,6 @@ public class CourseServlet extends HttpServlet {
         String hours = req.getParameter(HOURS);
         adminService.createCourse(description, hours);
         resp.sendRedirect(COURSE_SERVLET);
-
     }
 
     private void updateCourse(HttpServletRequest req, HttpServletResponse resp)

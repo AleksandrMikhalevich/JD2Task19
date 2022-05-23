@@ -31,8 +31,9 @@ public class Teacher extends Person implements Serializable {
             joinColumns = {@JoinColumn(name = "id_teacher")},
             inverseJoinColumns = {@JoinColumn(name = "id_course")}
     )
+    @ToString.Exclude
+    @Builder.Default
     private Set<Course> courses = new HashSet<>();
-
 
     @Override
     public String toString() {
