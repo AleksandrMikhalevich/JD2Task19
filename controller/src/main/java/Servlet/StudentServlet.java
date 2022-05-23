@@ -29,8 +29,6 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
         List<StudentDTO> studentList = studentService.findAllStudents();
         req.setAttribute("students", studentList);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("student.jsp");
@@ -41,9 +39,7 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<Course> courseList = adminService.listAllCourses();
+        List<Course> courseList = adminService.showAllCourses();
         req.setAttribute("courses", courseList);
         String action = req.getParameter(ACTION);
         switch (action) {

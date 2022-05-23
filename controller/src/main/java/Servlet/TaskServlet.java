@@ -53,7 +53,7 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Course> courseList = adminService.listAllCourses();
+        List<Course> courseList = adminService.showAllCourses();
         req.setAttribute("courses", courseList);
         List<StudentDTO> studentList = studentService.findAllStudents();
         req.setAttribute("students", studentList);
