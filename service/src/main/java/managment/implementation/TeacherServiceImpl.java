@@ -1,6 +1,7 @@
 package managment.implementation;
 
 import DTO.CourseDTO;
+import DTO.TeacherDTO;
 import courses.dao.EntityDaoImplTask;
 import courses.dao.EntityDaoImplTeacher;
 import courses.entity.*;
@@ -8,6 +9,7 @@ import managment.interfaces.TeacherService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeacherServiceImpl implements TeacherService {
 
@@ -85,8 +87,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> findAll() {
-        return daoImplTeacher.select();
+    public List<TeacherDTO> findAll() {
+        List<TeacherDTO> teachers = null;
+        teachers = (List<TeacherDTO>) daoImplTeacher.select().stream()
+                .map(TeacherDTO::new)
+                .collect(Collectors.toList());
+        return teachers;
     }
 
     @Override

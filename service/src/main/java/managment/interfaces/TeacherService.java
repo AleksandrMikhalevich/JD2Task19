@@ -1,6 +1,7 @@
 package managment.interfaces;
 
 import DTO.CourseDTO;
+import DTO.TeacherDTO;
 import courses.entity.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,7 +23,7 @@ public interface TeacherService {
     /**
      * Update Task
      */
-     void rateTask(Integer id, Mark mark, String review);
+    void rateTask(Integer id, Mark mark, String review);
 
     /**
      * Print Task
@@ -55,7 +56,8 @@ public interface TeacherService {
 
     void deleteById(int id);
 
-    List<Teacher> findAll();
+    List<TeacherDTO> findAll();
+
     List<CourseDTO> findCoursesForTeacher(String teacherSurname);
 
 }

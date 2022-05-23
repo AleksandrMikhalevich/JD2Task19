@@ -1,5 +1,6 @@
 package Servlet;
 
+import DTO.TeacherDTO;
 import courses.dao.EntityDao;
 import courses.dao.EntityDaoImplTeacher;
 import courses.entity.Teacher;
@@ -30,7 +31,7 @@ public class TeacherServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
         resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<Teacher> teacherList = teacherService.findAll();
+        List<TeacherDTO> teacherList = teacherService.findAll();
         req.setAttribute("teacher", teacherList);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher.jsp");
         requestDispatcher.forward(req, resp);
