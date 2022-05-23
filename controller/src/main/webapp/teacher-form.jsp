@@ -1,4 +1,3 @@
-<%@ page import="courses.entity.Student" %>
 <%@ page import="java.util.Objects" %><%--
   Created by IntelliJ IDEA.
   User: akyna
@@ -44,61 +43,81 @@
             border: darkblue;
         }
 
+        .field {
+            clear: both;
+            text-align: right;
+            line-height: 25px;
+        }
+
+        label {
+            float: left;
+            padding-right: 10px;
+        }
+
+        .main {
+            float: left;
+            padding-left: 750px
+        }
     </style>
 <body>
+<div style="text-align: center;"/>
+<h2>Управление учителями</h2>
+<a class="gradient-button1" href="index.jsp">Главная страница</a>
 
-<center>
-    <% if (request.getParameter("id") == null) { %>
-    <h2>Добавление учителя</h2>
-    <form name="add" method="post" action="teacher" autocomplete="off">
-        Имя: <label>
-        <input name="name" type="text" required placeholder="Имя">
-    </label> <br/>
-        Фамилия: <label>
-        <input name="surname" type="text" required placeholder="Фамилия">
-    </label><br/>
-        <input name="action" type="hidden" value="add">
+<a class="gradient-button1" href="teacher">Список Учителей</a>
+<br><br>
+<% if (request.getParameter("idTeacher") == null) { %>
+<h2>Добавление учителя</h2>
+<form name="add" method="post" action="teacher" autocomplete="off">
+    <div class="main">
+        <div class="field">
+            <label for="n">Имя:</label>
+            <input name="name" type="text" id="n" required placeholder="Имя">
+        </div>
+        <div class="field">
+            <label for="ln">Фамилия:</label>
+            <input name="surname" type="text" id="ln" required placeholder="Фамилия">
+            <input name="action" type="hidden" value="add">
+        </div>
         <button class="gradient-button1">Сохранить</button>
-    </form>
-    <% } else if (Objects.equals(request.getParameter("action"), "update")) {%>
-    <h2>Редактирование данных учителя</h2>
-    <form name="toUpdate" method="post" action="teacher" autocomplete="off">
-        <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
-        Имя: <label>
-        <input name="name" type="text" value="<%=request.getParameter("name")%>">
-    </label> <br/>
-        Фамилия: <label>
-        <input name="surname" type="text" value="<%=request.getParameter("surname")%>">
-    </label><br/>
-        <input name="action" type="hidden" value="update">
+
+    </div>
+</form>
+<% } else if (Objects.equals(request.getParameter("action"), "update")) {%>
+<h2>Редактирование данных учителя</h2>
+<form name="toUpdate" method="post" action="teacher" autocomplete="off">
+    <input name="idTeacher" type="hidden" value="<%=Integer.parseInt(request.getParameter("idTeacher"))%>">
+    <div class="main">
+        <div class="field">
+            <label for="n1">Имя:</label>
+            <input name="name" type="text" id="n1" value="<%=request.getParameter("name")%>">
+        </div>
+        <div class="field">
+            <label for="ln1">Фамилия:</label>
+            <input name="surname" type="text" id="ln1" value="<%=request.getParameter("surname")%>">
+            <input name="action" type="hidden" value="update">
+        </div>
         <button class="gradient-button1">Сохранить</button>
-    </form>
-    <% }
-        if (Objects.equals(request.getParameter("action"), "delete")) {%>
-    <h2>Удаление учителя</h2>
-    <form name="toDelete" method="post" action="teacher" autocomplete="off">
-        <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
-        Имя: <label>
-        <input name="name" type="text" value="<%=request.getParameter("name")%>">
-    </label> <br/>
-        Фамилия: <label>
-        <input name="surname" type="text" value="<%=request.getParameter("surname")%>">
-    </label><br/>
-        <input name="action" type="hidden" value="delete">
+    </div>
+</form>
+<% }
+    if (Objects.equals(request.getParameter("action"), "delete")) {%>
+<h2>Удаление учителя</h2>
+<form name="toDelete" method="post" action="teacher" autocomplete="off">
+    <input name="idTeacher" type="hidden" value="<%=Integer.parseInt(request.getParameter("idTeacher"))%>">
+    <div class="main">
+        <div class="field">
+            <label for="n1">Имя:</label>
+            <input name="name" type="text" id="n2" value="<%=request.getParameter("name")%>">
+        </div>
+        <div class="field">
+            <label for="ln1">Фамилия:</label>
+            <input name="surname" type="text" id="ln2" value="<%=request.getParameter("surname")%>">
+            <input name="action" type="hidden" value="delete">
+        </div>
         <button class="gradient-button1">Удалить</button>
-    </form>
-    <% } %>
-</center>
-
-
-<center>
-
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
-
-    <a class="gradient-button1" href="teacher">Назад</a>
-
-</center>
-
-
+    </div>
+</form>
+<% } %>
 </body>
 </html>

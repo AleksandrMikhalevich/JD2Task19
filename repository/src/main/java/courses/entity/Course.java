@@ -6,9 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class Course
@@ -35,7 +33,7 @@ public class Course implements Serializable {
     /**
      * Connection with table "Student"
      */
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses",fetch = FetchType.EAGER)
     @ToString.Exclude
     @Builder.Default
     private Set<Student> students = new HashSet<>();
@@ -43,9 +41,10 @@ public class Course implements Serializable {
     /**
      * Connection with table "Teacher"
      */
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
     @ToString.Exclude
-    private Set<Teacher> teachers = new HashSet<>();
+    @Builder.Default
+    private List<Teacher> teachers = new ArrayList<>();
 
     /**
      * Connection with table "Task"
@@ -54,18 +53,18 @@ public class Course implements Serializable {
     @ToString.Exclude
     private Set<Task> tasks = new HashSet<>();
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this)
-                != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id != null && Objects.equals(id, course.id);
+        return Objects.equals(id, course.id)
+                && Objects.equals(description, course.description)
+                && Objects.equals(hours, course.hours);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, description, hours);
     }
 }
