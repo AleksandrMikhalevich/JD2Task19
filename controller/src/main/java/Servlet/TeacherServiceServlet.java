@@ -1,6 +1,5 @@
 package Servlet;
 
-import DTO.CourseDTO;
 import courses.dao.EntityDaoImplAdmin;
 import courses.dao.EntityDaoImplTeacher;
 import managment.implementation.AdminServiceImpl;
@@ -28,8 +27,8 @@ public class TeacherServiceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
         resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<CourseDTO> listOfCourseAndTeacher = teacherService.findCoursesForTeacher("Кириллов");
-        req.setAttribute("listOfAllCourses", listOfCourseAndTeacher);
+//        List<CourseAdminDTO> listOfCourseAndTeacher = teacherService.findCoursesForTeacher("Кириллов");
+//        req.setAttribute("listOfAllCourses", listOfCourseAndTeacher);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/teacherService.jsp");
         requestDispatcher.forward(req, resp);
     }
@@ -50,9 +49,9 @@ public class TeacherServiceServlet extends HttpServlet {
 
     private void search(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String teacherSurnames = req.getParameter("teacherSurname");
-        List<CourseDTO> courseDTO = teacherService.findCoursesForTeacher(teacherSurnames);
-        req.setAttribute("listOfAllCourses", courseDTO);
-        req.getRequestDispatcher("/teacherService.jsp").forward(req, resp);
+//        String teacherSurnames = req.getParameter("teacherSurname");
+//        List<CourseDTO> courseDTO = teacherService.findCoursesForTeacher(teacherSurnames);
+//        req.setAttribute("listOfAllCourses", courseDTO);
+//        req.getRequestDispatcher("/teacherService.jsp").forward(req, resp);
     }
 }

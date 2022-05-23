@@ -1,7 +1,9 @@
 package managment.implementation;
 
+
 import DTO.CourseDTO;
 import DTO.TeacherDTO;
+
 import courses.dao.EntityDaoImplTask;
 import courses.dao.EntityDaoImplTeacher;
 import courses.entity.*;
@@ -104,22 +106,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void showTaskWithoutMark() {
         daoImplTask.showTaskWithoutMark();
-    }
-
-    @Override
-    public List<CourseDTO> findCoursesForTeacher(String teacherSurname) {
-        List<Object[]> lists = daoImplTeacher.findCoursesForTeacher(teacherSurname);
-        List<CourseDTO> listOfCourseDto = new ArrayList<>();
-        for (Object[] list : lists) {
-            listOfCourseDto.add(CourseDTO.builder()
-                    .id((Integer) list[0])
-                    .description((String) list[1])
-                    .hours((String) list[2])
-                    .teacherSurname((String) list[3])
-                    .teacherName((String) list[4])
-                    .build());
-        }
-        return listOfCourseDto;
     }
 
 }

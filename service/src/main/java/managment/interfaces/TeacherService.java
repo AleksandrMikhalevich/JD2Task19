@@ -1,7 +1,9 @@
 package managment.interfaces;
 
+
 import DTO.CourseDTO;
 import DTO.TeacherDTO;
+
 import courses.entity.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -56,8 +58,10 @@ public interface TeacherService {
 
     void deleteById(int id);
 
+
     List<TeacherDTO> findAll();
 
     List<CourseDTO> findCoursesForTeacher(String teacherSurname);
+
 
 }

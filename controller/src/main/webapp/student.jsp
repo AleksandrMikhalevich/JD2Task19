@@ -1,5 +1,6 @@
 <%@ page import="courses.entity.Student" %>
 <%@ page import="java.util.List" %>
+<%@ page import="DTO.StudentDTO" %>
 <%--
   Created by IntelliJ IDEA.
   User: akyna
@@ -58,10 +59,12 @@
         <tr>
             <th>Имя</th>
             <th>Фамилия</th>
-            <th>Действия</th>
+            <th>Профиль</th>
+            <th>Курсы</th>
+            <th>Задания</th>
         </tr>
-        <% List<Student> studentList = (List<Student>) request.getAttribute("students");
-            for (Student student : studentList) {
+        <% List<StudentDTO> studentList = (List<StudentDTO>) request.getAttribute("students");
+            for (StudentDTO student : studentList) {
         %>
         <tr>
             <td><%= student.getName()%>
@@ -76,19 +79,26 @@
                             href="student-form.jsp?id=<%=student.getId()%>&surname=<%=student.getSurname()%>&name=<%=student.getName()%>&action=delete"
                     >Удалить</a></button>
                 </form>
-
                 <form name="edit" method="post" action="student">
                     <input name="id" type="hidden" value="<%=student.getId()%>">
                     <button class="gradient-button"><a
                             href="student-form.jsp?id=<%=student.getId()%>&surname=<%=student.getSurname()%>&name=<%=student.getName()%>&action=update"
                     >Редактировать</a></button>
                 </form>
-
-                <form name="enroll" method="post" action="student">
+            </td>
+            <td>
+                <form name="courses" method="post" action="student">
                     <input name="id" type="hidden" value="<%=student.getId()%>">
                     <input name="action" type="hidden" value="enroll">
                     <button class="gradient-button">Запись/удаление записи на курс</button>
                 </form>
+            </td>
+            <td>
+            <form name="tasks" method="post" action="student">
+                <input name="id" type="hidden" value="<%=student.getId()%>">
+                <input name="action" type="hidden" value="search">
+                <button class="gradient-button">Информация о заданиях</button>
+            </form>
             </td>
         </tr>
         <%
@@ -96,12 +106,9 @@
         %>
     </table>
 
-
     <a class="gradient-button1" href="student-form.jsp">Добавить студента</a>
 
     <a class="gradient-button1" href="index.jsp">Главная Страница</a>
-
-    <a class="gradient-button1" href="search.jsp">Search Page</a>
 
 </center>
 

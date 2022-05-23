@@ -1,5 +1,6 @@
 package managment.interfaces;
 
+import DTO.StudentDTO;
 import DTO.TaskDTO;
 import courses.entity.Course;
 import courses.entity.Student;
@@ -21,9 +22,9 @@ public interface TaskService {
 
     void cancelAssignmentToCourse(Task task, Course course);
 
-    void assignToStudent(Task task, Student student);
+    void assignToStudent(Task task, StudentDTO student);
 
-    void cancelAssignmentToStudent(Task task, Student student);
+    void cancelAssignmentToStudent(Task task, StudentDTO student);
 
-    public List<TaskDTO> listOfAllTasks();
+    List<TaskDTO> listOfAllTasks();
 }

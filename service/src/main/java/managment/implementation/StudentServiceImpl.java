@@ -1,12 +1,16 @@
 package managment.implementation;
 
+import DTO.StudentDTO;
 import courses.dao.EntityDaoImplStudent;
 import courses.entity.Course;
 import courses.entity.Student;
 import courses.entity.Task;
 import managment.interfaces.StudentService;
+import mappers.StudentMapper;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Alex Mikhalevich
@@ -17,19 +21,18 @@ public class StudentServiceImpl implements StudentService {
 
     private final EntityDaoImplStudent studentDao = new EntityDaoImplStudent();
 
-
     @Override
-    public Student register(String name, String surname) {
+    public StudentDTO registerStudent(String name, String surname) {
         Student student = Student.builder()
                 .name(name)
                 .surname(surname)
                 .build();
         studentDao.insert(student);
-        return student;
+        return StudentMapper.INSTANCE.mapStudentToDTO(student);
     }
 
     @Override
-    public void update(int id, String name, String surname) {
+    public void updateStudent(int id, String name, String surname) {
         Student student = Student.builder()
                 .id(id)
                 .name(name)
@@ -39,37 +42,49 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteStudentById(int id) {
         studentDao.deleteById(id);
     }
 
     @Override
-    public List<Student> findAll() {
-        return (List<Student>) studentDao.select();
+    public List<StudentDTO> findAllStudents() {
+        List<Student> studentList = studentDao.findAllStudents();
+        return studentList.stream()
+                .map(Student -> StudentDTO.builder()
+                        .id(Student.getId())
+                        .name(Student.getName())
+                        .surname(Student.getSurname())
+                        .courses(Student.getCourses())
+                        .tasks(Student.getTasks())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Student findStudentById(int id) {
-        return studentDao.getEntity(id);
+    public StudentDTO findStudentById(int id) {
+        Student student = studentDao.getEntity(id);
+        return StudentMapper.INSTANCE.mapStudentToDTO(student);
     }
 
     @Override
-    public void enrollInCourse(Student student, Course course) {
+    public void enrollStudentInCourse(StudentDTO studentDTO, Course course) {
+        Student student = Student.builder()
+                .id(studentDTO.getId())
+                .name(studentDTO.getName())
+                .surname(studentDTO.getSurname())
+                .build();
         student.getCourses().add(course);
         studentDao.update(student);
     }
 
     @Override
-    public void cancelEnrollment(Student student, Course course) {
+    public void cancelStudentEnrollment(StudentDTO studentDTO, Course course) {
+        Student student = Student.builder()
+                .id(studentDTO.getId())
+                .name(studentDTO.getName())
+                .surname(studentDTO.getSurname())
+                .build();
         student.getCourses().remove(course);
         studentDao.update(student);
     }
-
-
-    @Override
-    public Task searchInTasks(int id) {
-        return studentDao.searchInTasks(id);
-    }
-
-
 }

@@ -28,11 +28,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void update(int id, String description, String hours) {
-        Course course = Course.builder()
-                .id(id)
-                .description(description)
-                .hours(hours)
-                .build();
+        Course course = (Course) daoImplCourse.getEntity(id);
+        course.setDescription(description);
+        course.setHours(hours);
         daoImplCourse.update(course);
     }
 

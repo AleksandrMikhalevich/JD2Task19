@@ -1,6 +1,6 @@
 package managment.implementation;
 
-import DTO.CourseDTO;
+import DTO.CourseAdminDTO;
 import courses.dao.*;
 import courses.entity.Course;
 import courses.entity.Mark;
@@ -8,7 +8,11 @@ import courses.entity.Teacher;
 import managment.interfaces.AdminService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdminServiceImpl implements AdminService {
 
@@ -19,12 +23,6 @@ public class AdminServiceImpl implements AdminService {
 
     private final EntityDaoImplTeacher daoImplTeacher
             = new EntityDaoImplTeacher();
-
-    private final EntityDaoImplMark daoImplMark
-            = new EntityDaoImplMark();
-
-    EntityDaoImplPerson daoPerson
-            = new EntityDaoImplPerson();
 
     public AdminServiceImpl(EntityDaoImplAdmin daoImplAdmin) {
         this.daoImplAdmin = daoImplAdmin;
@@ -46,21 +44,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateCourse(String desc, String hours) {
-        daoImplCourse.update(createCourse(desc, hours));
+    public void updateCourse(Integer id, String desc, String hours) {
+        Course course = daoImplCourse.getEntity(id);
+        course.setDescription(desc);
+        course.setHours(hours);
+        daoImplCourse.update(course);
     }
 
     @Override
-    public List<Course> listAllCourses() {
+    public List<Course> showAllCourses() {
         return daoImplCourse.select();
     }
 
     public Course findCourse(int id) {
         return daoImplCourse.getEntity(id);
-    }
-
-    public Teacher findTeacher(int id) {
-        return daoImplTeacher.getEntity(id);
     }
 
     @Override
@@ -79,50 +76,61 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateTeacher(String surname, String name) {
-        daoImplTeacher.update(createTeacher(surname, name));
+    public void updateTeacher(Integer id, String name, String surname) {
+        Teacher teacher = daoImplTeacher.getEntity(id);
+        teacher.setName(name);
+        teacher.setSurname(surname);
+        daoImplTeacher.update(teacher);
     }
 
     @Override
-    public List<Teacher> listAllTeachers() {
+    public List<Teacher> showAllTeachers() {
         return daoImplTeacher.select();
     }
 
-    @Override
-    public void enrollTeacher(Teacher teacher, Course course) {
-        teacher.getCourses().add(course);
-        daoImplTeacher.enrollTeacher(teacher);
-
-    }
-    @Override
-    public void cancelEnrollTeacher(Teacher teacher, Course course) {
-        teacher.getCourses().remove(course);
-        daoImplTeacher.enrollTeacher(teacher);
-
+    public Teacher findTeacher(int id) {
+        return daoImplTeacher.getEntity(id);
     }
 
     @Override
-    public Mark createMark(Integer grade) {
-        Mark mark = Mark.builder()
-                .mark(grade)
-                .build();
-        daoImplMark.insert(mark);
-        return mark;
-    }
-
-    @Override
-    public List<CourseDTO> listOfAllCourses() {
-        List<Object[]> lists = daoImplCourse.listOfAllCourse();
-        List<CourseDTO> listOfCourseDto = new ArrayList<>();
-        for (Object[] list : lists) {
-            listOfCourseDto.add(CourseDTO.builder()
-                    .id((Integer) list[0])
-                    .description((String) list[1])
-                    .hours((String) list[2])
-                    .teacherSurname((String) list[3])
-                    .teacherName((String) list[4])
-                    .build());
+    public void enrollTeacher(Integer teacherId, Integer courseId) {
+        Set<Course> courses = new HashSet<>();
+        Course course = daoImplCourse.getEntity(courseId);
+        Teacher teacher = daoImplTeacher.getEntity(teacherId);
+        if (teacher.getCourses() != null) {
+            courses = teacher.getCourses();
         }
-        return listOfCourseDto;
+        courses.add(course);
+        teacher.setCourses(courses);
+        daoImplTeacher.update(teacher);
+    }
+
+    @Override
+    public void cancelEnrollTeacher(Integer teacherId, Integer courseId) {
+        Course course = daoImplCourse.getEntity(courseId);
+        Teacher teacher = daoImplTeacher.getEntity(teacherId);
+        Set<Course> courses;
+        if (teacher.getCourses() != null) {
+            courses = teacher.getCourses();
+            courses.remove(course);
+            teacher.setCourses(courses);
+            daoImplTeacher.update(teacher);
+        }
+    }
+
+    @Override
+    public List<Teacher> showTeachersForCourse(Integer courseId) {
+        return daoImplCourse.showTeachersForCourse(courseId);
+    }
+
+    @Override
+    public List<CourseAdminDTO> listOfAllCourses() {
+        List<Course> courses = daoImplCourse.select();
+        return courses.stream().map(course -> CourseAdminDTO.builder()
+                        .id(course.getId())
+                        .description(course.getDescription())
+                        .listOfTeachers(course.getTeachers())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

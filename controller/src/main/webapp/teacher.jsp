@@ -7,7 +7,7 @@ Date: 17.05.2022
 Time: 19:15
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Страница учителей</title>
@@ -27,31 +27,39 @@ To change this template use File | Settings | File Templates.
     <div class="topnav">
         <a class="active" href="index.jsp">Главная страница</a>
 
+
         <a href="admin">Сервис администратора</a>
 
+
         <a href="student">Сервис студентов</a>
+
 
         <a href="teacher">Сервис учителей</a>
     </div>
     <h2>Сервис учителей</h2>
     <table border="3">
+
         <caption><b>Список учителей</b></caption>
         <tr>
             <th>Имя</th>
             <th>Фамилия</th>
-            <th>Действия</th>
+            <th colspan="2">Действия</th>
         </tr>
         <%
+
             List<TeacherDTO> teacherList = (List<TeacherDTO>) request.getAttribute("teacher");
+
             for (TeacherDTO teacher : teacherList
             ) {
         %>
         <tr>
             <td><%=teacher.getTeacherName()%>
+
             </td>
             <td><%=teacher.getTeacherSurname()%>
             </td>
             <td>
+
                 <form name="delete" method="post" action="teacher">
                     <input name="id" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
@@ -59,16 +67,24 @@ To change this template use File | Settings | File Templates.
                     >Удалить</a></button>
                 </form>
 
+
                 <form name="edit" method="post" action="teacher">
-                    <input name="id" type="hidden" value="<%=teacher.getId()%>">
+                    <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
+
                             href="teacher-form.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=update"
+
                     >Редактировать</a></button>
                 </form>
-                <form name="assignTask" action="task">
-                    <input name="action" type="hidden" value="task.jsp">
-                    <button class="gradient-button">Управление заданиями</button>
+            </td>
+            <td>
+                <form name="delete" method="post" action="teacher">
+                    <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
+                    <button class="gradient-button"><a
+                            href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getSurname()%>&name=<%=teacher.getName()%>&action=delete"
+                    >Удалить</a></button>
                 </form>
+
 
                 <form name="info" method="post" action="teacher">
                     <input name="id" type="hidden" value="<%=teacher.getId()%>">
@@ -78,6 +94,7 @@ To change this template use File | Settings | File Templates.
                         Инфо учителя</a></button>
                 </form>
             </td>
+
         </tr>
         <%
             }

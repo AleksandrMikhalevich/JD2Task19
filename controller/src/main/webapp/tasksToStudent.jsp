@@ -1,6 +1,7 @@
 <%@ page import="courses.entity.Student" %>
 <%@ page import="java.util.List" %>
-<%@ page import="courses.entity.Task" %><%--
+<%@ page import="courses.entity.Task" %>
+<%@ page import="DTO.StudentDTO" %><%--
   Created by IntelliJ IDEA.
   User: Alex Mikhalevich
   Date: 19.05.2022
@@ -60,8 +61,8 @@
             <th>Действия</th>
         </tr>
 
-        <% List<Student> studentList = (List<Student>) request.getAttribute("students");
-            for (Student student : studentList) {
+        <% List<StudentDTO> studentDTOList = (List<StudentDTO>) request.getAttribute("students");
+            for (StudentDTO student : studentDTOList) {
         %>
         <tr>
             <td><%= student.getName()%>

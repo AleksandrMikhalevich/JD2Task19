@@ -12,41 +12,37 @@ public class UtilsForTest {
 
 
     public static Course getCourse1() {
-        Course courseTest1 = Course.builder()
+        return Course.builder()
                 .description(DESCRIPTION_COURSE_1)
                 .hours(HOURS_COURSE)
                 .build();
-        return courseTest1;
     }
 
     public static Course getCourse2() {
-        Course courseTest2 = Course.builder()
+        return Course.builder()
+                .id(COURSE_ID)
                 .description(DESCRIPTION_COURSE_2)
                 .hours(HOURS_COURSE)
                 .build();
-        return courseTest2;
     }
 
     public static Task getTask() {
-        Task taskTest = Task.builder()
+        return Task.builder()
                 .description(TASK_DESC_1)
                 .build();
-        return taskTest;
     }
 
     public static Task getTaskForDelTest() {
-        Task taskTest = Task.builder()
+        return Task.builder()
                 .description(TASK_DESC_2)
                 .build();
-        return taskTest;
     }
 
     public static Teacher getTeacher() {
-        Teacher teacherTest = Teacher.builder()
+        return Teacher.builder()
                 .name(TEACHER_NAME)
                 .surname(TEACHER_SURNAME)
  //               .courses(Set.of(getCourse1(),getCourse2()))
                 .build();
-        return teacherTest;
     }
 }
