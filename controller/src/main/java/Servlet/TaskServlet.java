@@ -1,5 +1,6 @@
 package Servlet;
 
+import DTO.StudentDTO;
 import DTO.TaskDTO;
 import courses.dao.EntityDaoImplAdmin;
 import courses.entity.Course;
@@ -24,11 +25,11 @@ public class TaskServlet extends HttpServlet {
 
     public static final String DESCRIPTION = "description";
     public static final String REVIEW = "review";
-    private TaskServiceImpl taskService = new TaskServiceImpl();
+    private final TaskServiceImpl taskService = new TaskServiceImpl();
 
-    private AdminService adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
+    private final AdminService adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
-    private StudentServiceImpl studentService = new StudentServiceImpl();
+    private final StudentServiceImpl studentService = new StudentServiceImpl();
 
     public static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
 
@@ -54,7 +55,7 @@ public class TaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Course> courseList = adminService.listAllCourses();
         req.setAttribute("courses", courseList);
-        List<Student> studentList = studentService.findAll();
+        List<StudentDTO> studentList = studentService.findAllStudents();
         req.setAttribute("students", studentList);
         String action = req.getParameter(ACTION);
         switch (action) {
@@ -88,8 +89,6 @@ public class TaskServlet extends HttpServlet {
         }
     }
 
-
-
     private void assignTaskToStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
         Task task = taskService.findTaskById(id);
@@ -102,7 +101,7 @@ public class TaskServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
         Task task = taskService.findTaskById(id);
         int idStudent = Integer.parseInt(req.getParameter(ID_STUDENT));
-        Student student = studentService.findStudentById(idStudent);
+        StudentDTO student = studentService.findStudentById(idStudent);
         taskService.assignToStudent(task, student);
         resp.sendRedirect("teacher");
 
@@ -112,7 +111,7 @@ public class TaskServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
         Task task = taskService.findTaskById(id);
         int idStudent = Integer.parseInt(req.getParameter(ID_STUDENT));
-        Student  student = studentService.findStudentById(idStudent);
+        StudentDTO  student = studentService.findStudentById(idStudent);
         taskService.cancelAssignmentToStudent(task, student);
         resp.sendRedirect("teacher");
     }

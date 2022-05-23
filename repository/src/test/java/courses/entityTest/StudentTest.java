@@ -10,12 +10,10 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static courses.constans.ConstansStudent.*;
-import static org.junit.Assert.assertTrue;
 
 public class StudentTest {
 
@@ -33,7 +31,7 @@ public class StudentTest {
     }
 
     @Test
-    public void insertTestStudent() {
+    public void testInsertStudent() {
         Course course = Utils.createCourse();
         Student student = Utils.createStudent(Set.of(course));
         EntityDaoImplStudent daoStudent = new EntityDaoImplStudent();
@@ -43,7 +41,7 @@ public class StudentTest {
     }
 
     @Test
-    public void deleteTestStudent()
+    public void testDeleteStudent()
             throws InvocationTargetException,
             NoSuchMethodException, IllegalAccessException {
         Course course = Utils.createCourse();
@@ -53,23 +51,21 @@ public class StudentTest {
         daoStudent.insert(student);
         daoStudent.delete(student);
         Assert.assertNotNull(student);
-        System.out.println("Attention. There are dependent tables!");
     }
 
     @Test
-    public void deleteIdTestStudent() {
+    public void testDeleteStudentById() {
         Course course = Utils.createCourse();
         Student student = Utils.createStudent(Set.of(course));
         EntityDaoImplStudent daoStudent = new EntityDaoImplStudent();
         daoStudent.insert(course);
         daoStudent.insert(student);
-        daoStudent.deleteById(STUDENT_DELETE_BYID);
+        daoStudent.deleteById(STUDENT_DELETE_BY_ID);
         Assert.assertNotNull(student);
-        System.out.println("Attention. There are dependent tables!");
     }
 
     @Test
-    public void updateTestStudent() {
+    public void testUpdateStudent() {
         Student student = Student.builder()
                 .name(STUDENT_NAME)
                 .surname(STUDENT_SURNAME)
@@ -83,7 +79,7 @@ public class StudentTest {
     }
 
     @Test
-    public void getEntityTestStudent() {
+    public void testGetEntityStudent() {
         Course course = Utils.createCourse();
         Student student = Utils.createStudent(Set.of(course));
         EntityDaoImplStudent daoStudent = new EntityDaoImplStudent();
@@ -93,13 +89,18 @@ public class StudentTest {
     }
 
     @Test
-    public void selectTestStudent() {
+    public void testFindAllStudents() {
         Course course = Utils.createCourse();
         Student student = Utils.createStudent(Set.of(course));
+        Student student2 = Student.builder()
+                .name(STUDENT_SET_NAME)
+                .surname(STUDENT_SURNAME)
+                .build();
         EntityDaoImplStudent daoStudent = new EntityDaoImplStudent();
         daoStudent.insert(course);
         daoStudent.insert(student);
-        List students = daoStudent.select();
-        Assert.assertEquals(students.toString(), daoStudent.select().toString());
+        daoStudent.insert(student2);
+        List<Student> students = daoStudent.findAllStudents();
+        Assert.assertEquals(students.toString(), daoStudent.findAllStudents().toString());
     }
 }
