@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-@Table
+@Table(name = "teacher")
 public class Teacher extends Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,8 +31,8 @@ public class Teacher extends Person implements Serializable {
             joinColumns = {@JoinColumn(name = "id_teacher")},
             inverseJoinColumns = {@JoinColumn(name = "id_course")}
     )
-    @ToString.Exclude
     private Set<Course> courses = new HashSet<>();
+
 
     @Override
     public String toString() {

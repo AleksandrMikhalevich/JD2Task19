@@ -1,6 +1,6 @@
 package Servlet;
 
-import DTO.CourseDTO;
+import DTO.CourseAdminDTO;
 import courses.dao.EntityDaoImplAdmin;
 import courses.entity.Course;
 import courses.entity.Teacher;
@@ -15,35 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static constants.Const.*;
+
 @WebServlet(name = "AdminServlet", value = "/admin")
 public class AdminServlet extends HttpServlet {
-    public static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
-    public static final String ID = "id";
-    public static final String ACTION = "action";
-    public static final String ID_TEACHER = "idTeacher";
 
 
-    private AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
+    private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<CourseDTO> listOfCourseAndTeacher = adminService.listOfAllCourses();
-        req.setAttribute("listOfAllCourses", listOfCourseAndTeacher);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/admin.jsp");
+        List<CourseAdminDTO> listOfCourses = adminService.listOfAllCourses();
+        req.setAttribute(LIST_OF_COURSES, listOfCourses);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(ADMIN_JSP);
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<Teacher> teacherList = adminService.listAllTeachers();
-        req.setAttribute("listTeachers", teacherList);
-
+        List<Teacher> teacherList = adminService.showAllTeachers();
+        req.setAttribute(LIST_TEACHERS, teacherList);
         String action = req.getParameter(ACTION);
-
         switch (action) {
             case "enroll":
                 enrollCourse(req, resp);
@@ -54,34 +46,31 @@ public class AdminServlet extends HttpServlet {
             case "cancelToEnroll":
                 cancelTeacherEnroll(req, resp);
                 break;
+            default:
+                resp.sendRedirect(ADMIN_SERVLET);
         }
     }
 
-
     private void enrollCourse(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter(ID));
-        Course course = adminService.findCourse(id);
+        int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
+        Course course = adminService.findCourse(idCourse);
         RequestDispatcher dispatcher = req.getRequestDispatcher("teacherToEnroll.jsp");
         req.setAttribute("courseEnroll", course);
         dispatcher.forward(req, resp);
     }
 
     private void chooseTeacherToEnroll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int id = Integer.parseInt(req.getParameter(ID));
-        Course course = adminService.findCourse(id);
+        int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
         int idTeacher = Integer.parseInt(req.getParameter(ID_TEACHER));
-        Teacher teacher = adminService.findTeacher(idTeacher);
-        adminService.enrollTeacher(teacher, course);
-        resp.sendRedirect("admin");
+        adminService.enrollTeacher(idTeacher, idCourse);
+        resp.sendRedirect(ADMIN_SERVLET);
     }
 
     private void cancelTeacherEnroll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int id = Integer.parseInt(req.getParameter(ID));
-        Course course = adminService.findCourse(id);
+        int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
         int idTeacher = Integer.parseInt(req.getParameter(ID_TEACHER));
-        Teacher teacher = adminService.findTeacher(idTeacher);
-        adminService.cancelEnrollTeacher(teacher, course);
-        resp.sendRedirect("admin");
+        adminService.cancelEnrollTeacher(idTeacher, idCourse);
+        resp.sendRedirect(ADMIN_SERVLET);
     }
 }

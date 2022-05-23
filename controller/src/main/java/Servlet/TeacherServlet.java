@@ -1,9 +1,8 @@
 package Servlet;
 
-import courses.dao.EntityDao;
-import courses.dao.EntityDaoImplTeacher;
+import courses.dao.EntityDaoImplAdmin;
 import courses.entity.Teacher;
-import managment.implementation.TeacherServiceImpl;
+import managment.implementation.AdminServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,33 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static constants.Const.*;
+
 @WebServlet(name = "TeacherServlet", value = "/teacher")
 public class TeacherServlet extends HttpServlet {
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String SURNAME = "surname";
-    public static final String ACTION = "action";
 
-    public static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
-    private EntityDao daoTeacher = new EntityDaoImplTeacher();
-
-    private TeacherServiceImpl teacherService = new TeacherServiceImpl(new EntityDaoImplTeacher());
+    private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<Teacher> teacherList = teacherService.findAll();
+        List<Teacher> teacherList = adminService.showAllTeachers();
         req.setAttribute("teacher", teacherList);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(TEACHER_JSP);
         requestDispatcher.forward(req, resp);
-
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter(ACTION);
         switch (action) {
             case "add":
@@ -52,31 +41,33 @@ public class TeacherServlet extends HttpServlet {
             case "update":
                 updateTeacher(req, resp);
                 break;
+            default:
+                resp.sendRedirect(TEACHER_SERVLET);
         }
     }
 
     private void deleteTeacher(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        int id = Integer.parseInt(req.getParameter(ID));
-        teacherService.deleteById(id);
-        resp.sendRedirect("teacher");
+        int idTeacher = Integer.parseInt(req.getParameter(ID_TEACHER));
+        adminService.deleteTeacher(idTeacher);
+        resp.sendRedirect(TEACHER_SERVLET);
     }
 
     private void saveTeacher(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter(NAME);
-        String surname = req.getParameter(SURNAME);
-        teacherService.register(name, surname);
-        resp.sendRedirect("teacher");
+        String name = req.getParameter(TEACHER_NAME);
+        String surname = req.getParameter(TEACHER_SURNAME);
+        adminService.createTeacher(name, surname);
+        resp.sendRedirect(TEACHER_SERVLET);
     }
 
 
     private void updateTeacher(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        int id = Integer.parseInt(req.getParameter(ID));
-        String name = req.getParameter(NAME);
-        String surname = req.getParameter(SURNAME);
-        teacherService.update(id, name, surname);
-        resp.sendRedirect("teacher");
+        int idTeacher = Integer.parseInt(req.getParameter(ID_TEACHER));
+        String name = req.getParameter(TEACHER_NAME);
+        String surname = req.getParameter(TEACHER_SURNAME);
+        adminService.updateTeacher(idTeacher, name, surname);
+        resp.sendRedirect(TEACHER_SERVLET);
     }
 }
