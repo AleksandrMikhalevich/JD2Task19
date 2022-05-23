@@ -27,6 +27,7 @@ public class TeacherServlet extends HttpServlet {
 
     private TeacherServiceImpl teacherService = new TeacherServiceImpl(new EntityDaoImplTeacher());
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);

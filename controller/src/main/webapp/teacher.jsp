@@ -42,7 +42,7 @@ To change this template use File | Settings | File Templates.
             <th>Действия</th>
         </tr>
         <%
-            List<TeacherDTO> teacherList = (List<TeacherDTO>) request.getAttribute("teachers");
+            List<TeacherDTO> teacherList = (List<TeacherDTO>) request.getAttribute("teacher");
             for (TeacherDTO teacher : teacherList
             ) {
         %>

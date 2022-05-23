@@ -16,6 +16,7 @@
     <link href="css/top.css" rel="stylesheet">
 <body>
 <div class="topnav">
+
     <a class="active" href="index.jsp">Главная страница</a>
 
     <a href="admin">Сервис администратора</a>

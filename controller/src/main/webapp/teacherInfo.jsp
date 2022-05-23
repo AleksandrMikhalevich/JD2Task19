@@ -46,6 +46,7 @@
         </tr>
     </table>
     <form name="back" action="teacher">
+
         <button class="gradient-button1">Назад</button>
     </form>
 </center>
