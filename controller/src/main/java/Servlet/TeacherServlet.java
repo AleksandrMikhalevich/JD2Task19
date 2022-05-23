@@ -24,6 +24,7 @@ public class TeacherServlet extends HttpServlet {
 
     private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
