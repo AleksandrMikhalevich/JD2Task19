@@ -1,8 +1,7 @@
 package managment.interfaces;
 
-import DTO.CourseDTO;
+import DTO.CourseAdminDTO;
 import courses.entity.Course;
-import courses.entity.Mark;
 import courses.entity.Teacher;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,27 +15,27 @@ public interface AdminService {
             throws InvocationTargetException,
             NoSuchMethodException, IllegalAccessException;
 
-    void updateCourse(String desc, String hours);
+    void updateCourse(Integer id, String desc, String hours);
 
-    List<Course> listAllCourses();
+    List<Course> showAllCourses();
 
-    List<CourseDTO> listOfAllCourses();
+    Course findCourse(int id);
+
+    List<CourseAdminDTO> listOfAllCourses();
 
     Teacher createTeacher(String surname, String name);
 
     void deleteTeacher(int id);
 
-    void updateTeacher(String surname, String name);
+    void updateTeacher(Integer id, String surname, String name);
 
-    List<Teacher> listAllTeachers();
+    List<Teacher> showAllTeachers();
 
     Teacher findTeacher(int id);
 
-    void cancelEnrollTeacher(Teacher teacher, Course course);
+    void cancelEnrollTeacher(Integer teacherId, Integer courseId);
 
-    void enrollTeacher(Teacher teacher, Course course);
+    void enrollTeacher(Integer teacherId, Integer courseId);
 
-    Mark createMark(Integer mark);
-
-    Course findCourse(int id);
+    List<Teacher> showTeachersForCourse(Integer courseId);
 }

@@ -1,6 +1,7 @@
 <%@ page import="courses.entity.Course" %>
 <%@ page import="java.util.List" %>
-<%@ page import="courses.entity.Student" %><%--
+<%@ page import="courses.entity.Student" %>
+<%@ page import="DTO.StudentDTO" %><%--
   Created by IntelliJ IDEA.
   User: Alex Mikhalevich
   Date: 17.05.2022
@@ -51,7 +52,9 @@
 <body>
 
 <center>
-    <h2>Управление записью студентов на курсы</h2>
+    <% StudentDTO student = (StudentDTO) request.getAttribute("studentToEnroll");%>
+    <h2>Студент <%=student.getName()%> <%=student.getSurname()%></h2>
+    <h2>Управление записью на курсы</h2>
     <table border="3" width="50%">
 
         <caption><b>Список курсов</b></caption>
@@ -70,20 +73,19 @@
             <td><%= course.getHours()%>
             </td>
             <td>
-                <% Student student = (Student) request.getAttribute("studentToEnroll");%>
                 <form name="toEnroll" method="post" action="student">
                     <% if (!student.getCourses().contains(course)) { %>
                     <input name="id" type="hidden" value="<%=student.getId()%>">
                     <input name="idCourse" type="hidden" value="<%=course.getId()%>">
                     <input name="action" type="hidden" value="coursesToEnroll">
-                    <button class="gradient-button">Записаться на данный курс</button>
+                    <button class="gradient-button">Записаться на курс</button>
                     <% } else { %>
                 </form>
                 <form name="cancelEnroll" method="post" action="student">
                     <input name="id" type="hidden" value="<%=student.getId()%>">
                     <input name="idCourse" type="hidden" value="<%=course.getId()%>">
                     <input name="action" type="hidden" value="coursesToCancelEnroll">
-                    <button class="gradient-button">Отменить запись на данный курс</button>
+                    <button class="gradient-button">Отменить запись на курс</button>
                     <% } %>
                 </form>
             </td>

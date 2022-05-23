@@ -1,7 +1,9 @@
 package Servlet;
 
+import courses.dao.EntityDaoImplAdmin;
 import courses.dao.EntityDaoImplCourse;
 import courses.entity.Course;
+import managment.implementation.AdminServiceImpl;
 import managment.implementation.CourseServiceImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -13,32 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static constants.Const.*;
+
 @WebServlet(name = "CourseServlet", value = "/course")
 public class CourseServlet extends HttpServlet {
 
-    public static final String ACTION = "action";
-    public static final String ID = "id";
-    public static final String DESCRIPTION = "description";
-    public static final String HOURS = "hours";
 
-    public static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
-    private CourseServiceImpl courseService = new CourseServiceImpl(new EntityDaoImplCourse());
+    private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<Course> courseList = courseService.findAll();
+        List<Course> courseList = adminService.showAllCourses();
         req.setAttribute("courses", courseList);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("course.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(COURSE_JSP);
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
+            throws IOException {
         String action = req.getParameter(ACTION);
         switch (action) {
             case "delete":
@@ -50,33 +45,32 @@ public class CourseServlet extends HttpServlet {
             case "update":
                 updateCourse(req, resp);
                 break;
+            default:
+                resp.sendRedirect(COURSE_SERVLET);
         }
     }
 
     private void deleteCourse(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter(ID));
-        courseService.deleteById(id);
-        resp.sendRedirect("course");
+            throws IOException {
+        int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
+        adminService.deleteCourse(idCourse);
+        resp.sendRedirect(COURSE_SERVLET);
     }
 
     private void saveCourse(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String description = req.getParameter(DESCRIPTION);
         String hours = req.getParameter(HOURS);
-        courseService.register(description, hours);
-        resp.sendRedirect("course");
-
+        adminService.createCourse(description, hours);
+        resp.sendRedirect(COURSE_SERVLET);
     }
 
     private void updateCourse(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter(ID));
+            throws IOException {
+        Integer idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
         String description = req.getParameter(DESCRIPTION);
         String hours = req.getParameter(HOURS);
-        courseService.update(id, description, hours);
-        resp.sendRedirect("course");
+        adminService.updateCourse(idCourse, description, hours);
+        resp.sendRedirect(COURSE_SERVLET);
     }
-
-
 }

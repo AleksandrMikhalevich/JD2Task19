@@ -1,6 +1,7 @@
 package courses.dao;
 
 import courses.entity.Course;
+import courses.entity.Teacher;
 import courses.util.HibernateUtil;
 import org.hibernate.HibernateException;
 
@@ -15,17 +16,10 @@ public class EntityDaoImplCourse extends EntityDaoImpl<Course> {
         super(Course.class);
     }
 
-
-
-    public List<Object[]> listOfAllCourse() {
-        em = HibernateUtil.getEntityManager();
-        Query query = em.createQuery(
-                "SELECT c.id, c.description, c.hours, " +
-                        "t.surname, t.name " +
-                        "FROM courses.entity.Course c " +
-                        "left join c.teachers t");
-        List<Object[]> list = query.getResultList();
-        em.close();
-        return list;
+    public List<Teacher> showTeachersForCourse(Integer courseId) {
+        Query query = em.createQuery("SELECT c.teachers FROM Course c " +
+                "where c.id = :courseId ");
+        query.setParameter("courseId", courseId);
+        return query.getResultList();
     }
 }

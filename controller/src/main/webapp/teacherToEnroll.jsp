@@ -7,7 +7,7 @@
   Time: 00:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Управление учителями</title>
@@ -50,12 +50,17 @@
 </style>
 <body>
 <center>
-    <h2>Управление закреплением учителей за курсами</h2>
+    <h2>Сервис Администратора</h2>
+
+    <a class="gradient-button1" href="index.jsp">Главная страница</a>
+
+    <a class="gradient-button1" href="admin">Страница Администратора</a>
+    <br><br>
     <table border="3" width="50%">
 
-        <caption><b>Список курсов</b></caption>
+        <caption><b>Список учителей</b></caption>
         <tr>
-            <th>Описание</th>
+            <th>Название</th>
             <th>Часы</th>
             <th>Действия</th>
         </tr>
@@ -70,19 +75,10 @@
             </td>
             <td><% Course course = (Course) request.getAttribute("courseEnroll");%>
                 <form name="toEnroll" method="post" action="admin">
-                    <% if (!teacher.getCourses().contains(course)) { %>
-                    <input name="id" type="hidden" value="<%=course.getId()%>">
+                    <input name="idCourse" type="hidden" value="<%=course.getId()%>">
                     <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
                     <input name="action" type="hidden" value="teacherToEnroll">
-                    <button class="gradient-button">Добавить на курс</button>
-                    <% } else { %>
-                </form>
-                <form name="cancelEnroll" method="post" action="admin">
-                    <input name="id" type="hidden" value="<%=course.getId()%>">
-                    <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
-                    <input name="action" type="hidden" value="cancelToEnroll">
-                    <button class="gradient-button">Удалить с курса</button>
-                    <% } %>
+                    <button class="gradient-button">Выбрать</button>
                 </form>
             </td>
         </tr>
@@ -90,9 +86,7 @@
             }
         %>
     </table>
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
 
-    <a class="gradient-button1" href="admin">Назад</a>
 </center>
 </body>
 </html>

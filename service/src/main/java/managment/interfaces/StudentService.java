@@ -1,5 +1,6 @@
 package managment.interfaces;
 
+import DTO.StudentDTO;
 import courses.entity.Course;
 import courses.entity.Student;
 import courses.entity.Task;
@@ -13,20 +14,18 @@ import java.util.List;
  */
 public interface StudentService {
 
-    Student register(String name, String surname);
+    StudentDTO registerStudent(String name, String surname);
 
-    void update(int id, String name, String surname);
+    void updateStudent(int id, String name, String surname);
 
-    void deleteById(int id);
+    void deleteStudentById(int id);
 
-    List<Student> findAll();
+    List<StudentDTO> findAllStudents();
 
-    Student findStudentById(int id);
+    StudentDTO findStudentById(int id);
 
-    void enrollInCourse(Student student, Course course);
+    void enrollStudentInCourse(StudentDTO studentDTO, Course course);
 
-    void cancelEnrollment(Student student, Course course);
-
-    Task searchInTasks(int id);
+    void cancelStudentEnrollment(StudentDTO studentDTO, Course course);
 
 }
