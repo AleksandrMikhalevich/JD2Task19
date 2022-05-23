@@ -104,7 +104,7 @@ public class EntityDaoImpl<T> implements EntityDao {
      * Method to get information about the object
      */
     @Override
-    public List select() {
+    public List<T> select() {
         em = HibernateUtil.getEntityManager();
         String queryString = "SELECT e FROM " + clazz.getSimpleName() + " e";
         Query query = em.createQuery(queryString);

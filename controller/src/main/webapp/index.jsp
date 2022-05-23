@@ -32,7 +32,7 @@
 
     <a class="gradient-button1" href="student">Сервис студентов</a>
 
-    <a class="gradient-button1" href="teacherService">Сервис учителей</a>
+    <a class="gradient-button1" href="teacher">Сервис учителей</a>
 
 
 </center>

@@ -11,58 +11,20 @@
     <title>Учитель</title>
     <link href="css/button-small.css" rel="stylesheet">
     <link href="css/button.css" rel="stylesheet">
-
-    <style>
-        h2 {
-            font-size: xxx-large;
-            font-family: Arial;
-        }
-
-        caption {
-            font-family: Arial;
-            font-size: xx-large;
-        }
-
-        td {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        tr {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        body {
-            background: linear-gradient(to top left, powderblue, cornflowerblue);
-            color: darkblue;
-            background-size: cover;
-        }
-
-        table {
-            border: darkblue;
-        }
-
-        .field {
-            clear: both;
-            text-align: right;
-            line-height: 25px;
-        }
-
-        label {
-            float: left;
-            padding-right: 10px;
-        }
-
-        .main {
-            float: left;
-            padding-left: 750px
-        }
-    </style>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/top.css" rel="stylesheet">
 <body>
-<div style="text-align: center;"/>
-<h2>Управление учителями</h2>
-<a class="gradient-button1" href="index.jsp">Главная страница</a>
+<div class="topnav">
+    <a class="active" href="index.jsp">Главная страница</a>
+
+    <a href="admin">Сервис администратора</a>
+
+    <a href="student">Сервис студентов</a>
+
+
+    <a href="teacher">Сервис учителей</a>
+</div>
+
 
 <a class="gradient-button1" href="teacher">Список Учителей</a>
 <br><br>

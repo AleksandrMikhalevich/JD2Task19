@@ -1,5 +1,6 @@
 <%@ page import="courses.entity.Teacher" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="DTO.TeacherDTO" %><%--
 Created by IntelliJ IDEA.
 User: akyna
 Date: 17.05.2022
@@ -13,50 +14,31 @@ To change this template use File | Settings | File Templates.
 </head>
 <link href="css/button-small.css" rel="stylesheet">
 <link href="css/button.css" rel="stylesheet">
+<link href="css/top.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/table.css" rel="stylesheet">
+<body>
 <style>
-    h2 {
-        font-size: xxx-large;
-        font-family: Arial;
-    }
-
-    caption {
-        font-family: Arial;
-        font-size: xx-large;
-    }
-
-    td {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    tr {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    body {
-        background: linear-gradient(to top left, powderblue, cornflowerblue);
-        color: darkblue;
-        background-size: cover;
-    }
-
-    table {
-        border: darkblue;
-
+    a:link {
+        text-decoration: none;
     }
 </style>
-
-<body>
 <center>
-    <h2>Управление учителями</h2>
+    <div class="topnav">
+        <a class="active" href="index.jsp">Главная страница</a>
 
-    <a class="gradient-button1" href="teacher-form.jsp">Добавить учителя</a>
 
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
+        <a href="admin">Сервис администратора</a>
 
-    <a class="gradient-button1" href="admin">Страница администратoра</a>
-    <br><br>
-    <table border="3" width="50%">
+
+        <a href="student">Сервис студентов</a>
+
+
+        <a href="teacher">Сервис учителей</a>
+    </div>
+    <h2>Сервис учителей</h2>
+    <table border="3">
+
         <caption><b>Список учителей</b></caption>
         <tr>
             <th>№</th>
@@ -65,23 +47,33 @@ To change this template use File | Settings | File Templates.
             <th colspan="2">Действия</th>
         </tr>
         <%
-            List<Teacher> teacherList = (List<Teacher>) request.getAttribute("teacher");
-            int i = 1;
-            for (Teacher teacher : teacherList
+
+            List<TeacherDTO> teacherList = (List<TeacherDTO>) request.getAttribute("teachers");
+            for (TeacherDTO teacher : teacherList
             ) {
         %>
         <tr>
-            <td><%= i++ %>
+            <td><%=teacher.getTeacherName()%>
+
             </td>
-            <td><%=teacher.getName()%>
-            </td>
-            <td><%=teacher.getSurname()%>
+            <td><%=teacher.getTeacherSurname()%>
             </td>
             <td>
+
+                <form name="delete" method="post" action="teacher">
+                    <input name="id" type="hidden" value="<%=teacher.getId()%>">
+                    <button class="gradient-button"><a
+                            href="teacher-form.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=delete"
+                    >Удалить</a></button>
+                </form>
+
+
                 <form name="edit" method="post" action="teacher">
                     <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
-                            href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getSurname()%>&name=<%=teacher.getName()%>&action=update"
+
+                            href="teacher-form.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=update"
+
                     >Редактировать</a></button>
                 </form>
             </td>
@@ -92,16 +84,25 @@ To change this template use File | Settings | File Templates.
                             href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getSurname()%>&name=<%=teacher.getName()%>&action=delete"
                     >Удалить</a></button>
                 </form>
+
+
+                <form name="info" method="post" action="teacher">
+                    <input name="id" type="hidden" value="<%=teacher.getId()%>">
+                    <button class="gradient-button"><a
+                            href="teacherInfo.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>
+                            &name=<%=teacher.getTeacherName()%>&course=<%=teacher.getCourseName()%>">
+                        Инфо учителя</a></button>
+                </form>
             </td>
-            <%--                <form name="assignTask" action="task">--%>
-            <%--                    <input name="action" type="hidden" value="task.jsp">--%>
-            <%--                    <button class="gradient-button">Управление заданиями</button>--%>
-            <%--                </form>--%>
+
         </tr>
         <%
             }
         %>
     </table>
+
+    <a class="gradient-button1" href="teacher-form.jsp">Добавить учителя</a>
+
 </center>
 </body>
 </html>
