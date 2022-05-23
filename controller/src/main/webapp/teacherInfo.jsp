@@ -1,5 +1,4 @@
 <%@ page import="java.util.List" %>
-<%@ page import="DTO.CourseDTO" %>
 <%@ page import="java.util.Objects" %>
 <%@ page import="DTO.TeacherDTO" %><%--
   Created by IntelliJ IDEA.

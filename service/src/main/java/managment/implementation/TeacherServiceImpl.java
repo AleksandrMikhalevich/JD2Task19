@@ -1,7 +1,5 @@
 package managment.implementation;
 
-
-import DTO.CourseDTO;
 import DTO.TeacherDTO;
 
 import courses.dao.EntityDaoImplTask;

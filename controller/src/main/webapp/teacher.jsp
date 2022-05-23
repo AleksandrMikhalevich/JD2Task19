@@ -61,9 +61,9 @@ To change this template use File | Settings | File Templates.
             <td>
 
                 <form name="delete" method="post" action="teacher">
-                    <input name="id" type="hidden" value="<%=teacher.getId()%>">
+                    <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
-                            href="teacher-form.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=delete"
+                            href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=delete"
                     >Удалить</a></button>
                 </form>
 
@@ -71,30 +71,22 @@ To change this template use File | Settings | File Templates.
                 <form name="edit" method="post" action="teacher">
                     <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
-
-                            href="teacher-form.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=update"
-
+                            href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&action=update"
                     >Редактировать</a></button>
                 </form>
-            </td>
-            <td>
-                <form name="delete" method="post" action="teacher">
-                    <input name="idTeacher" type="hidden" value="<%=teacher.getId()%>">
-                    <button class="gradient-button"><a
-                            href="teacher-form.jsp?idTeacher=<%=teacher.getId()%>&surname=<%=teacher.getSurname()%>&name=<%=teacher.getName()%>&action=delete"
-                    >Удалить</a></button>
-                </form>
 
+                <form name="assignTask" action="task">
+                    <input name="action" type="hidden" value="task.jsp">
+                    <button class="gradient-button">Управление заданиями</button>
+                </form>
 
                 <form name="info" method="post" action="teacher">
                     <input name="id" type="hidden" value="<%=teacher.getId()%>">
                     <button class="gradient-button"><a
-                            href="teacherInfo.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>
-                            &name=<%=teacher.getTeacherName()%>&course=<%=teacher.getCourseName()%>">
+                            href="teacherInfo.jsp?id=<%=teacher.getId()%>&surname=<%=teacher.getTeacherSurname()%>&name=<%=teacher.getTeacherName()%>&course=<%=teacher.getCourseName()%>">
                         Инфо учителя</a></button>
                 </form>
             </td>
-
         </tr>
         <%
             }
