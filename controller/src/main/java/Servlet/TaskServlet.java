@@ -1,14 +1,15 @@
 package Servlet;
 
+import DTO.CourseTaskDTO;
 import DTO.StudentDTO;
-import DTO.TaskDTO;
 import courses.dao.EntityDaoImplAdmin;
+import courses.dao.EntityDaoImplTeacher;
 import courses.entity.Course;
-import courses.entity.Student;
 import courses.entity.Task;
 import managment.implementation.AdminServiceImpl;
 import managment.implementation.StudentServiceImpl;
 import managment.implementation.TaskServiceImpl;
+import managment.implementation.TeacherServiceImpl;
 import managment.interfaces.AdminService;
 
 import javax.servlet.RequestDispatcher;
@@ -25,15 +26,17 @@ public class TaskServlet extends HttpServlet {
 
     public static final String DESCRIPTION = "description";
     public static final String REVIEW = "review";
+    public static final String DESCRIPTION_OF_TASK = "description";
+    public static final String TASK_SERVLET = "task";
+
+    private final TeacherServiceImpl teacherService = new TeacherServiceImpl(new EntityDaoImplTeacher());
     private final TaskServiceImpl taskService = new TaskServiceImpl();
 
     private final AdminService adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
     private final StudentServiceImpl studentService = new StudentServiceImpl();
 
-    public static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
-
-    public static final String ID_TASK = "id";
+    public static final String ID_TASK = "idTask";
 
     public static final String ID_COURSE = "idCourse";
 
@@ -43,20 +46,18 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        resp.setCharacterEncoding(DEFAULT_CHARACTER_ENCODING);
-        List<TaskDTO> taskDTOS = taskService.listOfAllTasks();
-        req.setAttribute("tasks", taskDTOS);
+        List<CourseTaskDTO> taskDTOS = teacherService.listOfCourseAndTasks();
+        req.setAttribute("listOfCourseAndTasks", taskDTOS);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/task.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Course> courseList = adminService.showAllCourses();
-        req.setAttribute("courses", courseList);
-        List<StudentDTO> studentList = studentService.findAllStudents();
-        req.setAttribute("students", studentList);
+//        List<Course> courseList = adminService.showAllCourses();
+//        req.setAttribute("courses", courseList);
+//        List<StudentDTO> studentList = studentService.findAllStudents();
+//        req.setAttribute("students", studentList);
         String action = req.getParameter(ACTION);
         switch (action) {
             case "add":
@@ -86,12 +87,14 @@ public class TaskServlet extends HttpServlet {
             case "cancelTaskToStudent":
                 removeTaskFromStudent(req, resp);
                 break;
+            default:
+                resp.sendRedirect(TASK_SERVLET);
         }
     }
 
     private void assignTaskToStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
-        Task task = taskService.findTaskById(id);
+        Task task = teacherService.getTask(id);
         RequestDispatcher dispatcher = req.getRequestDispatcher("tasksToStudent.jsp");
         req.setAttribute("taskToAssign", task);
         dispatcher.forward(req, resp);
@@ -99,7 +102,7 @@ public class TaskServlet extends HttpServlet {
 
     private void addTaskToStudent(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
-        Task task = taskService.findTaskById(id);
+        Task task = teacherService.getTask(id);
         int idStudent = Integer.parseInt(req.getParameter(ID_STUDENT));
         StudentDTO student = studentService.findStudentById(idStudent);
         taskService.assignToStudent(task, student);
@@ -144,21 +147,23 @@ public class TaskServlet extends HttpServlet {
     }
 
     private void updateTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int id = Integer.parseInt(req.getParameter(ID_TASK));
-        String description = req.getParameter(DESCRIPTION);
-        String review = req.getParameter(REVIEW);
-        taskService.update(id, description, review);
-        resp.sendRedirect("teacher");
+        int idTask = Integer.parseInt(req.getParameter(ID_TASK));
+        String description = req.getParameter(DESCRIPTION_OF_TASK);
+        teacherService.update(idTask, description);
+        resp.sendRedirect(TASK_SERVLET);
     }
 
 
     private void deleteTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int id = Integer.parseInt(req.getParameter(ID_TASK));
         taskService.deleteById(id);
-        resp.sendRedirect("teacher");
+        resp.sendRedirect(TASK_SERVLET);
     }
 
-    private void saveTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    private void saveTask(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Integer idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
+        String description = req.getParameter(DESCRIPTION_OF_TASK);
+        teacherService.addTask(idCourse, description);
+        resp.sendRedirect(TASK_SERVLET);
     }
 }

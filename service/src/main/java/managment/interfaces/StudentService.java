@@ -5,6 +5,7 @@ import courses.entity.Course;
 import courses.entity.Student;
 import courses.entity.Task;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -24,8 +25,8 @@ public interface StudentService {
 
     StudentDTO findStudentById(int id);
 
-    void enrollStudentInCourse(StudentDTO studentDTO, Course course);
+    void enrollStudentInCourse(StudentDTO studentDTO, Integer idCourse);
 
-    void cancelStudentEnrollment(StudentDTO studentDTO, Course course);
+    void cancelStudentEnrollment(Integer idStudent, Integer idCourse);
 
 }

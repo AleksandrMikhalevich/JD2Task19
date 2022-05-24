@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Set;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "student")
 public class Student extends Person implements Serializable {
 
     private final static long serialVersionUID = 1L;
@@ -34,7 +35,6 @@ public class Student extends Person implements Serializable {
     private Set<Course> courses = new HashSet<>();
 
     @OneToMany(mappedBy = "student",fetch = FetchType.EAGER)
-    @ToString.Exclude
     @Builder.Default
     private Set<Task> tasks = new HashSet<>();
 
@@ -45,5 +45,20 @@ public class Student extends Person implements Serializable {
                 ", name='" + getName() + '\'' +
                 ", surname='" + getSurname() + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return Objects.equals(getId(), student.getId()) && Objects.equals(getName(), student.getName())
+                && Objects.equals(getSurname(), student.getSurname());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getId(), getName(), getSurname());
     }
 }

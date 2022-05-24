@@ -1,18 +1,16 @@
 package managment.implementation;
 
 import DTO.CourseAdminDTO;
-import courses.dao.*;
+import courses.dao.EntityDaoImplAdmin;
+import courses.dao.EntityDaoImplCourse;
+import courses.dao.EntityDaoImplTeacher;
 import courses.entity.Course;
-import courses.entity.Mark;
 import courses.entity.Teacher;
 import managment.interfaces.AdminService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AdminServiceImpl implements AdminService {
 
@@ -94,12 +92,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void enrollTeacher(Integer teacherId, Integer courseId) {
-        Set<Course> courses = new HashSet<>();
         Course course = daoImplCourse.getEntity(courseId);
         Teacher teacher = daoImplTeacher.getEntity(teacherId);
-        if (teacher.getCourses() != null) {
-            courses = teacher.getCourses();
-        }
+        Set<Course> courses = teacher.getCourses();
         courses.add(course);
         teacher.setCourses(courses);
         daoImplTeacher.update(teacher);
@@ -109,13 +104,10 @@ public class AdminServiceImpl implements AdminService {
     public void cancelEnrollTeacher(Integer teacherId, Integer courseId) {
         Course course = daoImplCourse.getEntity(courseId);
         Teacher teacher = daoImplTeacher.getEntity(teacherId);
-        Set<Course> courses;
-        if (teacher.getCourses() != null) {
-            courses = teacher.getCourses();
-            courses.remove(course);
-            teacher.setCourses(courses);
-            daoImplTeacher.update(teacher);
-        }
+        Set<Course> courses = teacher.getCourses();
+        courses.remove(course);
+        teacher.setCourses(courses);
+        daoImplTeacher.update(teacher);
     }
 
     @Override
