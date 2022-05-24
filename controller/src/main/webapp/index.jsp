@@ -10,31 +10,10 @@
 <head>
     <title>Главная Страница</title>
 </head>
-<link href="css/button.css" rel="stylesheet">
-<style>
-    body {
-        height: 200px;
-        background: linear-gradient(to top left, powderblue, cornflowerblue);
-        color: darkblue;
-        background-size: cover;
-    }
-
-    h2 {
-        font-size: xxx-large;
-        font-family: Arial;
-    }
-</style>
 <body>
+<%@include file="header.jsp" %>
 <center>
     <h2>Главная страница</h2>
-
-    <a class="gradient-button1" href="admin">Сервис администратора</a>
-
-    <a class="gradient-button1" href="student">Сервис студентов</a>
-
-    <a class="gradient-button1" href="teacher">Сервис учителей</a>
-
-
 </center>
 </body>
 </html>

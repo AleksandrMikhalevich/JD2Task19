@@ -1,10 +1,8 @@
 package Servlet;
 
 import courses.dao.EntityDaoImplAdmin;
-import courses.dao.EntityDaoImplCourse;
 import courses.entity.Course;
 import managment.implementation.AdminServiceImpl;
-import managment.implementation.CourseServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import static constants.Const.*;
 
 @WebServlet(name = "CourseServlet", value = "/course")
 public class CourseServlet extends HttpServlet {
-
 
     private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 

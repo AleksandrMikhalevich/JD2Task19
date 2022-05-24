@@ -1,19 +1,17 @@
 package managment.interfaces;
 
 import DTO.StudentDTO;
-import DTO.TaskStudentDTO;
 import courses.entity.Course;
+import courses.entity.Mark;
 import courses.entity.Task;
-
-import java.util.List;
 
 public interface TaskService {
 
-    Task add(String description);
+    Task addTask(String description, Course course);
 
-    void update(int id, String description, String review);
+    void updateTask(int idTask, Course course, String description, String status, String review, String mark);
 
-    void deleteById(int id);
+    void deleteTaskById(int id);
 
     Task findTaskById(int id);
 

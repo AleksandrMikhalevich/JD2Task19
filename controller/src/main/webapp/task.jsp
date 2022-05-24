@@ -1,4 +1,3 @@
-<%@ page import="DTO.TaskStudentDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="DTO.CourseTaskDTO" %>
 <%@ page import="courses.entity.Task" %>
@@ -14,46 +13,11 @@
 <head>
     <title>Страница заданий</title>
 </head>
-<link href="css/button-small.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet">
-<style>
-    h2 {
-        font-size: xxx-large;
-        font-family: Arial;
-    }
-
-    caption {
-        font-family: Arial;
-        font-size: xx-large;
-    }
-
-    td {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    tr {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    body {
-        background: linear-gradient(to top left, powderblue, cornflowerblue);
-        color: darkblue;
-        background-size: cover;
-    }
-
-    table {
-        border: darkblue;
-
-    }
-</style>
 <body>
-
+<%@include file="header.jsp" %>
 <center>
-    <a class="gradient-button1" href="index.jsp">Главная Страница</a>
-    <table border="3" width="50%">
-        <caption><b>Список заданий</b></caption>
+    <table border="3">
+        <caption><b>Список заданий на курсах</b></caption>
         <tr>
             <th>№</th>
             <th>Курс</th>
@@ -84,7 +48,9 @@
                             <form name="edit" method="post" action="task-form.jsp">
                                 <input name="idTask" type="hidden" value="<%=task.getId()%>">
                                 <button class="gradient-button"><a
-                                        href="task-form.jsp?idTask=<%=task.getId()%>&descriptionCourse=<%=tasks.getDescription()%>&description=<%=task.getDescription()%>&action=update"
+                                        href="task-form.jsp?idTask=<%=task.getId()%>&description=<%=task.getDescription()%>&status=<%=task.getStatus()%>
+                                        &review=<%=task.getReview()%>&mark=<%=task.getMark()%>
+                                        &idCourse=<%=tasks.getId()%>&descriptionCourse=<%=tasks.getDescription()%>&action=update"
                                 >Редактировать</a></button>
                             </form>
                         </td>
@@ -92,7 +58,7 @@
                             <form name="delete" method="post" action="task-form.jsp">
                                 <input name="idTask" type="hidden" value="<%=task.getId()%>">
                                 <button class="gradient-button"><a
-                                        href="task-form.jsp?idTask=<%=task.getId()%>&descriptionCourse=<%=tasks.getDescription()%>&description=<%=task.getDescription()%>&action=delete"
+                                        href="task-form.jsp?idTask=<%=task.getId()%>&description=<%=task.getDescription()%>&descriptionCourse=<%=tasks.getDescription()%>&action=delete"
                                 >Удалить</a></button>
                             </form>
                         </td>
@@ -115,10 +81,10 @@
             }
         %>
     </table>
-</center>
+
+    <a class="gradient-button1" href="teacher">Назад</a>
 
 </center>
-
 
 </body>
 </html>

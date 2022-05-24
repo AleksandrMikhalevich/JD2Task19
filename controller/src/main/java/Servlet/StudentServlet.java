@@ -3,9 +3,10 @@ package Servlet;
 import DTO.StudentDTO;
 import courses.dao.EntityDaoImplAdmin;
 import courses.entity.Course;
-import enums.ActionEnum;
+import courses.entity.Task;
 import managment.implementation.AdminServiceImpl;
 import managment.implementation.StudentServiceImpl;
+import managment.implementation.TaskServiceImpl;
 import managment.interfaces.AdminService;
 
 import javax.servlet.RequestDispatcher;
@@ -17,15 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static constants.StudentConstants.*;
-import static enums.ActionEnum.ADD;
+import static constants.Const.*;
+
 
 @WebServlet(name = "StudentServlet", value = "/student")
 public class StudentServlet extends HttpServlet {
 
     private final StudentServiceImpl studentService = new StudentServiceImpl();
     private final AdminService adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
-
+    private final TaskServiceImpl taskService = new TaskServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,7 +35,6 @@ public class StudentServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("student.jsp");
         requestDispatcher.forward(req, resp);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -71,7 +71,7 @@ public class StudentServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter(ID_STUDENT));
         StudentDTO student = studentService.findStudentById(id);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("search.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("studentTasks.jsp");
         req.setAttribute("studentTasks", student);
         dispatcher.forward(req, resp);
     }
@@ -85,8 +85,8 @@ public class StudentServlet extends HttpServlet {
 
     private void saveStudent(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter(NAME);
-        String surname = req.getParameter(SURNAME);
+        String name = req.getParameter(STUDENT_NAME);
+        String surname = req.getParameter(STUDENT_SURNAME);
         studentService.registerStudent(name, surname);
         resp.sendRedirect("student");
     }
@@ -94,10 +94,11 @@ public class StudentServlet extends HttpServlet {
     private void updateStudent(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         int id = Integer.parseInt(req.getParameter(ID_STUDENT));
-        String name = req.getParameter(NAME);
-        String surname = req.getParameter(SURNAME);
+        String name = req.getParameter(STUDENT_NAME);
+        String surname = req.getParameter(STUDENT_SURNAME);
         studentService.updateStudent(id, name, surname);
-        resp.sendRedirect("student");    }
+        resp.sendRedirect("student");
+    }
 
     private void enrollStudent(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -113,7 +114,9 @@ public class StudentServlet extends HttpServlet {
         StudentDTO student = studentService.findStudentById(id);
         int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
         Course course = adminService.findCourse(idCourse);
-        studentService.enrollStudentInCourse(student, course);
+        int idTask = Integer.parseInt(req.getParameter(ID_TASK));
+        Task task = taskService.findTaskById(idTask);
+        studentService.enrollStudentInCourse(student, course, task);
         resp.sendRedirect("student");
     }
 

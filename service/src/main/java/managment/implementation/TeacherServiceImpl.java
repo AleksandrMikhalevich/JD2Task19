@@ -1,7 +1,9 @@
 package managment.implementation;
 
+import DTO.CourseTaskDTO;
 import DTO.TeacherDTO;
 
+import courses.dao.EntityDaoImplCourse;
 import courses.dao.EntityDaoImplTask;
 import courses.dao.EntityDaoImplTeacher;
 import courses.entity.*;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService {
 
     private final EntityDaoImplTeacher daoImplTeacher;
+    private final EntityDaoImplCourse daoImplCourse = new EntityDaoImplCourse();
 
     private final EntityDaoImplTask daoImplTask =
             new EntityDaoImplTask();
@@ -37,10 +40,12 @@ public class TeacherServiceImpl implements TeacherService {
         daoImplTask.deleteById(id);
     }
 
+
+
     @Override
     public void rateTask(Integer id, Mark mark, String review) {
         Task task = getTask(id);
-        task.setMark(mark);
+//        task.setMark(mark);
         task.setReview(review);
         daoImplTask.update(task);
     }
@@ -88,8 +93,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherDTO> findAll() {
-        List<TeacherDTO> teachers = null;
-        teachers = (List<TeacherDTO>) daoImplTeacher.select().stream()
+        List<TeacherDTO> teachers;
+        teachers = daoImplTeacher.select().stream()
                 .map(TeacherDTO::new)
                 .collect(Collectors.toList());
         return teachers;
@@ -106,4 +111,15 @@ public class TeacherServiceImpl implements TeacherService {
         daoImplTask.showTaskWithoutMark();
     }
 
+    @Override
+    public List<CourseTaskDTO> listOfCourseAndTasks() {
+        List<Course> lists = daoImplCourse.select();
+        return lists.stream()
+                .map(course -> CourseTaskDTO.builder()
+                        .id(course.getId())
+                        .description(course.getDescription())
+                        .listOfTask(course.getTasks())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

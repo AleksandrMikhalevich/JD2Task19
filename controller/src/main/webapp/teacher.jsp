@@ -1,4 +1,4 @@
-<%@ page import="courses.entity.Teacher" %>
+
 <%@ page import="java.util.List" %>
 <%@ page import="DTO.TeacherDTO" %><%--
 Created by IntelliJ IDEA.
@@ -17,12 +17,12 @@ To change this template use File | Settings | File Templates.
 <link href="css/top.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/table.css" rel="stylesheet">
-<body>
 <style>
     a:link {
         text-decoration: none;
     }
 </style>
+<body>
 <center>
     <div class="topnav">
         <a class="active" href="index.jsp">Главная страница</a>

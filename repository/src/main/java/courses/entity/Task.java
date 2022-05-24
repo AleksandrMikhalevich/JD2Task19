@@ -36,7 +36,7 @@ public class Task implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "done")
+    @Column(name = "status")
     private String status;
 
     @Column(name = "review")
@@ -59,9 +59,10 @@ public class Task implements Serializable {
     /**
      * Connection with table "Mark"
      */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "mark_id")
-    private Mark mark;
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "mark_id")
+//    private Mark mark;
+    private String mark;
 
     @Override
     public boolean equals(Object o) {

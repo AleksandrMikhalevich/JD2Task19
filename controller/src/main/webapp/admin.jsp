@@ -11,54 +11,11 @@
 <html>
 <head>
     <title>Страница администратора</title>
-    <link href="css/button-small.css" rel="stylesheet">
-    <link href="css/button.css" rel="stylesheet">
-    <style>
-        h2 {
-            font-size: xxx-large;
-            font-family: Arial;
-        }
-
-        caption {
-            font-family: Arial;
-            font-size: xx-large;
-        }
-
-        td {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        tr {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        body {
-            background: linear-gradient(to top left, powderblue, cornflowerblue);
-            color: darkblue;
-            background-size: cover;
-        }
-
-        table {
-            border: darkblue;
-
-        }
-    </style>
 </head>
+<%@include file="header.jsp" %>
 <body>
-<div style="text-align: center;">
+<center>
     <h2>Сервис администратора</h2>
-
-    <a class="gradient-button1" href="course">Управление Курсами</a>
-
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
-
-    <a class="gradient-button1" href="teacher">Информация об Учителях</a>
-
-    <br><br>
-
-    <center>
         <table border="6" width="50%">
             <caption><b>Список курсов</b></caption>
             <tr>
@@ -115,7 +72,9 @@
                 }
             %>
         </table>
+            <a class="gradient-button1" href="course">Управление Курсами</a>
+
+            <a class="gradient-button1" href="teacher">Информация об Учителях</a>
     </center>
-</div>
 </body>
 </html>

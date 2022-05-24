@@ -9,68 +9,11 @@
 <html>
 <head>
     <title>Курс</title>
-    <link href="css/button-small.css" rel="stylesheet">
-    <link href="css/button.css" rel="stylesheet">
-
-    <style>
-        h2 {
-            font-size: xxx-large;
-            font-family: Arial;
-        }
-
-        caption {
-            font-family: Arial;
-            font-size: xx-large;
-        }
-
-        td {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        tr {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        body {
-            background: linear-gradient(to top left, powderblue, cornflowerblue);
-            color: darkblue;
-            background-size: cover;
-        }
-
-        table {
-            border: darkblue;
-        }
-
-        .field {
-            clear: both;
-            text-align: right;
-            line-height: 25px;
-        }
-
-        label {
-            float: left;
-            padding-right: 10px;
-        }
-
-        .main {
-            float: left;
-            padding-left: 750px
-        }
-
-    </style>
+</head>
 <body>
-
-
-<div style="text-align: center;">
-</div>
+<%@include file="header.jsp" %>
 <center>
     <h2> Управление курсами</h2>
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
-
-    <a class="gradient-button1" href="course">Список курсов</a>
-
     <% if (request.getParameter("idCourse") == null) { %>
     <h2>Добавление курса</h2>
     <form name="add" method="post" action="course">
@@ -89,7 +32,7 @@
     </form>
 
     <% } else if (Objects.equals(request.getParameter("action"), "update")) {%>
-    <h2>Редактирование данных курса</h2>
+    <h2>Редактирование курса <%=request.getParameter("description")%></h2>
     <form name="toUpdate" method="post" action="course">
         <input name="idCourse" type="hidden" value="<%=Integer.parseInt(request.getParameter("idCourse"))%>">
         <div class="main">
@@ -107,7 +50,7 @@
     </form>
     <% }
         if (Objects.equals(request.getParameter("action"), "delete")) {%>
-    <h2>Удаление курса</h2>
+    <h2>Удаление курса <%=request.getParameter("description")%></h2>
     <form name="toDelete" method="post" action="course">
         <input name="idCourse" type="hidden" value="<%=Integer.parseInt(request.getParameter("idCourse"))%>">
         <div class="main">
@@ -124,7 +67,9 @@
         </div>
     </form>
     <% } %>
-</center>
 
+    <a class="gradient-button1" href="course">Назад</a>
+
+</center>
 </body>
 </html>

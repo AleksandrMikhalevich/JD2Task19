@@ -1,6 +1,5 @@
 package Servlet;
 
-
 import DTO.TeacherDTO;
 import courses.dao.EntityDaoImplAdmin;
 import courses.dao.EntityDaoImplTeacher;
@@ -23,10 +22,7 @@ import static constants.Const.*;
 public class TeacherServlet extends HttpServlet {
 
     private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
-
-
     private final TeacherService teacherService = new TeacherServiceImpl(new EntityDaoImplTeacher());
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

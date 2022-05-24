@@ -51,7 +51,6 @@ public class Utils {
         return Task.builder()
                 .description(TASK_DESCRIPTION)
                 .course(course)
-                .mark(mark)
                 .build();
     }
 }

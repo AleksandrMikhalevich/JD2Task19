@@ -4,6 +4,7 @@ import DTO.StudentDTO;
 import DTO.TaskStudentDTO;
 import courses.dao.EntityDaoImplTask;
 import courses.entity.Course;
+import courses.entity.Mark;
 import courses.entity.Student;
 import courses.entity.Task;
 import managment.interfaces.TaskService;
@@ -15,25 +16,30 @@ public class TaskServiceImpl implements TaskService {
     private final EntityDaoImplTask taskDao = new EntityDaoImplTask();
 
     @Override
-    public Task add(String description) {
+    public Task addTask(String description, Course course) {
         Task task = Task.builder()
                 .description(description)
+                .course(course)
                 .build();
         taskDao.insert(task);
         return task;
     }
 
     @Override
-    public void update(int id, String description,  String review) {
+    public void updateTask(int id, Course course, String description, String status, String review, String mark) {
         Task task = Task.builder()
+                .id(id)
                 .description(description)
+                .course(course)
+                .status(status)
                 .review(review)
+                .mark(mark)
                 .build();
         taskDao.update(task);
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteTaskById(int id) {
         taskDao.deleteById(id);
     }
 

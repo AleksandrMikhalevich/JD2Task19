@@ -20,7 +20,6 @@ import static constants.Const.*;
 @WebServlet(name = "AdminServlet", value = "/admin")
 public class AdminServlet extends HttpServlet {
 
-
     private final AdminServiceImpl adminService = new AdminServiceImpl(new EntityDaoImplAdmin());
 
     @Override

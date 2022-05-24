@@ -10,43 +10,8 @@
 <html>
 <head>
     <title>Профиль студента</title>
-    <link href="css/button-small.css" rel="stylesheet">
-    <link href="css/button.css" rel="stylesheet">
-
-    <style>
-        h2 {
-            font-size: xxx-large;
-            font-family: Arial;
-        }
-
-        caption {
-            font-family: Arial;
-            font-size: xx-large;
-        }
-
-        td {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        tr {
-            font-size: xx-large;
-            font-family: Arial;
-        }
-
-        body {
-            background: linear-gradient(to top left, powderblue, cornflowerblue);
-            color: darkblue;
-            background-size: cover;
-        }
-
-        table {
-            border: darkblue;
-        }
-
-    </style>
 <body>
-
+<%@include file="header.jsp" %>
 <center>
     <% if (request.getParameter("id") == null) { %>
     <h2>Добавление студента</h2>
@@ -61,7 +26,8 @@
         <button class="gradient-button1">Сохранить</button>
     </form>
     <% } else if (Objects.equals(request.getParameter("action"), "update")) {%>
-    <h2>Редактирование профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%></h2>
+    <h2>Редактирование профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%>
+    </h2>
     <form name="toUpdate" method="post" action="student" autocomplete="off">
         <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
         Имя: <label>
@@ -75,7 +41,8 @@
     </form>
     <% }
         if (Objects.equals(request.getParameter("action"), "delete")) {%>
-    <h2>Удаление профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%></h2>
+    <h2>Удаление профиля студента <%=request.getParameter("name")%> <%=request.getParameter("surname")%>
+    </h2>
     <form name="toDelete" method="post" action="student" autocomplete="off">
         <input name="id" type="hidden" value="<%=Integer.parseInt(request.getParameter("id"))%>">
         Имя: <label>
@@ -88,17 +55,9 @@
         <button class="gradient-button1">Удалить</button>
     </form>
     <% } %>
-</center>
-
-
-<center>
-
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
 
     <a class="gradient-button1" href="student">Назад</a>
 
 </center>
-
-
 </body>
 </html>

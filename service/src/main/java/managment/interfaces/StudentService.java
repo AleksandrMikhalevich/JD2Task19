@@ -25,8 +25,8 @@ public interface StudentService {
 
     StudentDTO findStudentById(int id);
 
-    void enrollStudentInCourse(StudentDTO studentDTO, Integer idCourse);
+    void enrollStudentInCourse(StudentDTO studentDTO, Course course, Task task);
 
-    void cancelStudentEnrollment(Integer idStudent, Integer idCourse);
+    void cancelStudentEnrollment(StudentDTO studentDTO, Course course);
 
 }

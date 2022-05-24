@@ -1,5 +1,6 @@
 package managment.interfaces;
 
+import DTO.CourseTaskDTO;
 import DTO.TeacherDTO;
 import courses.entity.*;
 
@@ -55,7 +56,8 @@ public interface TeacherService {
 
     void deleteById(int id);
 
-
     List<TeacherDTO> findAll();
+
+    List<CourseTaskDTO> listOfCourseAndTasks();
 
 }
