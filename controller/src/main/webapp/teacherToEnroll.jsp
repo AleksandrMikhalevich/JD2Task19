@@ -12,51 +12,11 @@
 <head>
     <title>Управление учителями</title>
 </head>
-<link href="css/button-small.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet">
-
-<style>
-    h2 {
-        font-size: xxx-large;
-        font-family: Arial;
-    }
-
-    caption {
-        font-family: Arial;
-        font-size: xx-large;
-    }
-
-    td {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    tr {
-        font-size: xx-large;
-        font-family: Arial;
-    }
-
-    body {
-        background: linear-gradient(to top left, powderblue, cornflowerblue);
-        color: darkblue;
-        background-size: cover;
-    }
-
-    table {
-        border: darkblue;
-
-    }
-
-</style>
 <body>
+<%@include file="header.jsp" %>
 <center>
     <h2>Сервис Администратора</h2>
-
-    <a class="gradient-button1" href="index.jsp">Главная страница</a>
-
-    <a class="gradient-button1" href="admin">Страница Администратора</a>
-    <br><br>
-    <table border="3" width="50%">
+    <table border="3">
 
         <caption><b>Список учителей</b></caption>
         <tr>
@@ -86,6 +46,8 @@
             }
         %>
     </table>
+
+    <a class="gradient-button1" href="admin">Назад</a>
 
 </center>
 </body>

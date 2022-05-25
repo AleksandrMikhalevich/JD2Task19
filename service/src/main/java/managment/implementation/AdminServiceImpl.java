@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Teacher createTeacher(String surname, String name) {
+    public Teacher createTeacher(String name, String surname) {
         Teacher teacher = Teacher.builder()
                 .name(name)
                 .surname(surname)

@@ -44,11 +44,6 @@
                     <% if (!student.getCourses().contains(course)) { %>
                     <input name="id" type="hidden" value="<%=student.getId()%>">
                     <input name="idCourse" type="hidden" value="<%=course.getId()%>">
-                    <% Set<Task> taskSet = course.getTasks();
-                        for (Task task : taskSet) {
-                    %>
-                    <input name="idTask" type="hidden" value="<%=task.getId()%>">
-                    <% } %>
                     <input name="action" type="hidden" value="coursesToEnroll">
                     <button class="gradient-button">Записаться на курс</button>
                     <% } else { %>

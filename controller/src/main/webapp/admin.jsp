@@ -72,9 +72,9 @@
                 }
             %>
         </table>
-            <a class="gradient-button1" href="course">Управление Курсами</a>
+            <a class="gradient-button1" href="course">Управление курсами</a>
 
-            <a class="gradient-button1" href="teacher">Информация об Учителях</a>
+            <a class="gradient-button1" href="teacher">Управление учителями</a>
     </center>
 </body>
 </html>

@@ -114,9 +114,7 @@ public class StudentServlet extends HttpServlet {
         StudentDTO student = studentService.findStudentById(id);
         int idCourse = Integer.parseInt(req.getParameter(ID_COURSE));
         Course course = adminService.findCourse(idCourse);
-        int idTask = Integer.parseInt(req.getParameter(ID_TASK));
-        Task task = taskService.findTaskById(idTask);
-        studentService.enrollStudentInCourse(student, course, task);
+        studentService.enrollStudentInCourse(student, course);
         resp.sendRedirect("student");
     }
 

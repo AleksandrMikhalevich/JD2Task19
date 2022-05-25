@@ -108,7 +108,7 @@
             primary key,
             description varchar(255) null,
             review varchar(255) null,
-            done varchar(30) null,
+            status varchar(30) null,
             course_id int null,
             student_id int null,
             mark_id int null,

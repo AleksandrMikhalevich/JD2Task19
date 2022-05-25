@@ -12,30 +12,10 @@ To change this template use File | Settings | File Templates.
 <head>
     <title>Страница учителей</title>
 </head>
-<link href="css/button-small.css" rel="stylesheet">
-<link href="css/button.css" rel="stylesheet">
-<link href="css/top.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/table.css" rel="stylesheet">
-<style>
-    a:link {
-        text-decoration: none;
-    }
-</style>
 <body>
+<%@include file="header.jsp" %>
 <center>
-    <div class="topnav">
-        <a class="active" href="index.jsp">Главная страница</a>
 
-
-        <a href="admin">Сервис администратора</a>
-
-
-        <a href="student">Сервис студентов</a>
-
-
-        <a href="teacher">Сервис учителей</a>
-    </div>
     <h2>Сервис учителей</h2>
     <table border="3">
 
@@ -54,7 +34,6 @@ To change this template use File | Settings | File Templates.
         %>
         <tr>
             <td><%=teacher.getTeacherName()%>
-
             </td>
             <td><%=teacher.getTeacherSurname()%>
             </td>

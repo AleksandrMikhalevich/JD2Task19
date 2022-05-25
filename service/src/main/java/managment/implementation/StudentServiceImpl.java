@@ -37,12 +37,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent(int id, String name, String surname) {
-        Student student = Student.builder()
+        Student student = studentDao.getEntity(id);
+        Student updateStudent = Student.builder()
                 .id(id)
                 .name(name)
                 .surname(surname)
+                .courses(student.getCourses())
                 .build();
-        studentDao.update(student);
+        studentDao.update(updateStudent);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void enrollStudentInCourse(StudentDTO studentDTO, Course course, Task task) {
+    public void enrollStudentInCourse(StudentDTO studentDTO, Course course) {
         studentDTO.getCourses().add(course);
         studentDTO.getTasks().addAll(course.getTasks());
         Student student = Student.builder()
@@ -82,8 +84,7 @@ public class StudentServiceImpl implements StudentService {
                 .tasks(studentDTO.getTasks())
                 .build();
         studentDao.update(student);
-        task.setStudent(student);
-        daoImplTask.update(task);
+
     }
 
     @Override

@@ -13,7 +13,7 @@
 <body>
 <%@include file="header.jsp" %>
 <center>
-    <h2>Главная страница</h2>
+    <h2>Академия</h2>
 </center>
 </body>
 </html>
